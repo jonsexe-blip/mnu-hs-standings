@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 MNU HS Open League Standings</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0d1117;--s1:#161b22;--s2:#21262d;--s3:#2d333b;--bd:#30363d;--tx:#e6edf3;--mx:#8b949e;--dm:#484f58;--pr:#388bfd;--pd:#1f4287;--ac:#f0883e;--gr:#3fb950;--yw:#d29922;--rd:#f85149;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.5;font-size:14px;}
+a{color:var(--pr);text-decoration:none;}
+
+/* HEADER */
+header{background:linear-gradient(135deg,#0d1117 0%,#161b22 50%,#0d1117 100%);border-bottom:1px solid var(--bd);padding:20px 20px 0;}
+.hdr-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.hdr-title h1{font-size:21px;font-weight:700;letter-spacing:-.3px;}
+.hdr-title p{color:var(--mx);font-size:12px;margin-top:2px;}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;}
+.stat{text-align:center;background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:7px 12px;}
+.stat .v{font-size:18px;font-weight:700;color:var(--pr);}
+.stat .l{font-size:10px;color:var(--mx);text-transform:uppercase;letter-spacing:.5px;}
+
+/* DATA COVERAGE BANNER */
+.coverage-banner{background:rgba(240,136,62,.08);border:1px solid rgba(240,136,62,.25);border-radius:6px;padding:8px 14px;margin:14px 0 0;font-size:12px;color:var(--mx);display:flex;align-items:center;gap:8px;}
+.coverage-banner strong{color:var(--ac);}
+
+/* TABS */
+.tabs{display:flex;margin-top:14px;overflow-x:auto;}
+.tab-btn{padding:9px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--mx);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:var(--tx);}
+.tab-btn.active{color:var(--tx);border-bottom-color:var(--ac);}
+
+/* MAIN */
+main{max-width:1180px;margin:0 auto;padding:16px 20px;}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+
+/* CONTROLS */
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+.ctrl input,.ctrl select{background:var(--s2);border:1px solid var(--bd);border-radius:6px;color:var(--tx);padding:6px 10px;font-size:13px;outline:none;}
+.ctrl input:focus,.ctrl select:focus{border-color:var(--pr);}
+.ctrl input{width:200px;}
+.tgl{background:var(--s2);border:1px solid var(--bd);border-radius:6px;color:var(--mx);padding:5px 10px;cursor:pointer;font-size:13px;transition:all .15s;}
+.tgl.on{background:var(--pd);border-color:var(--pr);color:var(--tx);}
+.legend{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--mx);margin-left:auto;}
+.ldot{display:inline-flex;align-items:center;gap:4px;}
+.lc{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--bd);}
+table{width:100%;border-collapse:collapse;}
+thead th{background:var(--s2);padding:9px 11px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--mx);border-bottom:1px solid var(--bd);cursor:pointer;white-space:nowrap;user-select:none;}
+thead th:hover{color:var(--tx);}
+thead th.sorted .si{color:var(--ac);}
+tbody tr{border-bottom:1px solid var(--bd);transition:background .1s;}
+tbody tr:hover{background:var(--s2);}
+tbody tr:last-child{border-bottom:none;}
+tbody td{padding:8px 11px;vertical-align:middle;}
+tbody tr.hidden{display:none;}
+tbody tr.jv-row.jv-hidden{display:none;}
+
+.tier-hdr td{background:var(--s3);color:var(--mx);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:5px 11px;border-top:2px solid var(--bd);}
+.tier-hdr:hover{background:var(--s3)!important;}
+
+/* CELLS */
+.rk{font-weight:700;color:var(--mx);font-size:13px;}
+.rk.r1{color:#ffd700!important;}
+.rk.r5{color:#ffa500!important;}
+.rk.r10{color:var(--ac)!important;}
+.team-nm{font-weight:600;}
+.cdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;}
+.jv-b{display:inline-block;font-size:9px;font-weight:600;background:var(--s3);color:var(--mx);border-radius:3px;padding:1px 4px;margin-left:4px;text-transform:uppercase;}
+.cbadge{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;font-weight:500;white-space:nowrap;border:1px solid transparent;}
+.rw{color:var(--gr);font-weight:600;}
+.rl{color:var(--rd);}
+
+/* WIN PCT BAR */
+.wpw{display:flex;align-items:center;gap:6px;}
+.wpv{font-size:12px;font-weight:600;width:36px;}
+.wpb{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden;min-width:40px;}
+.wpf{height:100%;border-radius:3px;}
+
+/* RRI CELL */
+.rri-v{font-variant-numeric:tabular-nums;font-size:13px;font-weight:700;}
+.rri-hi{color:var(--gr);}
+.rri-md{color:var(--yw);}
+.rri-lo{color:var(--rd);}
+
+/* CLOSENESS CELL */
+
+/* RANK DIFF */
+.diff-up{color:var(--gr);font-weight:600;font-size:12px;}
+.diff-dn{color:var(--rd);font-weight:600;font-size:12px;}
+.diff-eq{color:var(--dm);font-size:12px;}
+
+/* NOTES */
+.notes{margin-top:20px;background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:18px;}
+.notes h2{font-size:15px;font-weight:700;margin-bottom:14px;}
+.ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.nc h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ac);margin-bottom:8px;}
+.nc ul{color:var(--mx);padding-left:15px;font-size:13px;line-height:1.8;}
+.nc strong{color:var(--tx);}
+.callout{background:rgba(56,139,253,.07);border-left:3px solid var(--pr);border-radius:0 6px 6px 0;padding:11px 13px;font-size:13px;color:var(--mx);line-height:1.6;margin-top:12px;}
+
+/* SPECTRUM CHART */
+.chart-box{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:18px;margin-bottom:16px;}
+.chart-box h2{font-size:15px;font-weight:700;margin-bottom:4px;}
+.chart-box p{font-size:13px;color:var(--mx);margin-bottom:14px;line-height:1.6;}
+
+/* SPECTRUM SVG */
+#spectrumSvg{width:100%;overflow:visible;}
+.spec-dot{cursor:pointer;transition:r .15s;}
+.spec-dot:hover{r:8px;}
+.spec-label{font-size:10px;fill:var(--mx);pointer-events:none;}
+
+/* INSIGHT CARDS */
+.ic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:16px;}
+.ic{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:13px;}
+.ic h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mx);margin-bottom:8px;}
+.ic ul{list-style:none;}
+.ic li{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--bd);font-size:13px;}
+.ic li:last-child{border-bottom:none;}
+.ir{color:var(--mx);font-size:12px;margin-right:5px;}
+.bover{font-size:11px;padding:2px 6px;border-radius:4px;font-weight:600;background:rgba(63,185,80,.15);color:var(--gr);}
+.bunder{font-size:11px;padding:2px 6px;border-radius:4px;font-weight:600;background:rgba(248,81,73,.15);color:var(--rd);}
+.bclose{font-size:11px;padding:2px 6px;border-radius:4px;font-weight:600;background:rgba(248,81,73,.15);color:var(--rd);}
+.bflip{font-size:11px;padding:2px 6px;border-radius:4px;font-weight:600;background:rgba(163,113,247,.15);color:#a371f7;}
+
+/* CONFERENCE */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
+.ccard{background:var(--s1);border:1px solid var(--bd);border-radius:8px;overflow:hidden;}
+.chdr{padding:11px 14px;font-size:14px;font-weight:700;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:7px;}
+.crow{display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:1px solid var(--bd);font-size:13px;gap:8px;}
+.crow:last-child{border-bottom:none;}
+.crow.po{background:rgba(56,139,253,.04);}
+.crk{width:20px;color:var(--mx);font-size:12px;flex-shrink:0;}
+.cnm{flex:1;font-weight:500;}
+.covr{font-size:12px;color:var(--mx);}
+.crri{font-size:11px;font-weight:600;width:40px;text-align:right;}
+.po-badge{font-size:10px;background:rgba(56,139,253,.2);color:var(--pr);border-radius:3px;padding:1px 4px;font-weight:600;}
+
+/* EXPLAINER */
+.exp{max-width:700px;}
+.exp h2{font-size:17px;font-weight:700;margin-bottom:10px;}
+.exp h3{font-size:14px;font-weight:600;margin:16px 0 7px;color:var(--ac);}
+.exp p{color:var(--mx);margin-bottom:9px;line-height:1.7;}
+.exp ul{color:var(--mx);margin:6px 0 9px 16px;line-height:1.8;}
+.exp strong{color:var(--tx);}
+.formula{background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:9px 13px;font-family:monospace;font-size:13px;color:var(--ac);margin:7px 0;}
+.exp .callout{margin-top:10px;}
+
+footer{text-align:center;padding:18px;color:var(--dm);font-size:12px;border-top:1px solid var(--bd);margin-top:28px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-top">
+    <div class="hdr-title">
+      <h1>2026 MNU HS Open League Standings</h1>
+      <p>Conference Playoffs Edition · Posted 5/10/26 · Rankings by <strong style="color:var(--tx)">MN-RRI</strong></p>
+    </div>
+    <div class="stats-bar" id="statsBar"></div>
+  </div>
+  <div class="coverage-banner">
+    <span>⚠</span>
+    <span><strong>Data note:</strong> KRACH/RRI computed from <strong id="gameCount">333</strong> games (regular season + Matoska Classic D1/D2/D3, Spring Jamboree, Hopkins Hustle D1 bracket).
+    Hopkins Hustle pool play and D2/D3 results are not yet available. 4 out-of-state WI teams from Matoska are included in KRACH math for strength-of-schedule accuracy but excluded from these rankings.</span>
+  </div>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="table">Rankings Table</button>
+    <button class="tab-btn" data-tab="spectrum">RRI Spectrum</button>
+    <button class="tab-btn" data-tab="conference">By Conference</button>
+    <button class="tab-btn" data-tab="about">About MN-RRI</button>
+  </nav>
+</header>
+
+<main>
+<!-- TABLE TAB -->
+<div class="tab-pane active" id="tab-table">
+  <div class="ctrl">
+    <input type="text" id="srch" placeholder="Search teams…">
+    <select id="cflt">
+      <option value="">All Conferences</option>
+      <option>Lake</option><option>Twin Cities</option><option>North Suburban</option>
+      <option>Suburban East</option><option>Classic Suburban</option><option>South Suburban</option>
+    </select>
+    <button class="tgl on" id="jvTgl">Show JV</button>
+    <div class="legend" id="legend"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th data-s="rank">MNU# <span class="si">▲</span></th>
+        <th data-s="team">Team <span class="si">⇅</span></th>
+        <th data-s="conf">Conference <span class="si">⇅</span></th>
+        <th data-s="wins">Record <span class="si">⇅</span></th>
+        <th data-s="winPct">Win% <span class="si">⇅</span></th>
+        <th data-s="rri" title="Computed KRACH/RRI from 333 games using Bradley-Terry maximum-likelihood. RRI = ln(KRACH), normalized to geometric mean = 0.">RRI Score <span class="si">⇅</span></th>
+        <th data-s="rankDiff" title="Computed rank minus MNU official rank. Positive = our computation puts this team higher than official.">Calc vs MNU <span class="si">⇅</span></th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="notes">
+    <h2>Methodology Notes &amp; Algorithm Transparency</h2>
+    <div class="ngrid">
+      <div class="nc">
+        <h3>What the standings.pdf tells us</h3>
+        <ul>
+          <li><strong>Algorithm:</strong> MN-RRI is a modified version of USA Ultimate's RRI, itself derived from KRACH (Bradley-Terry model)</li>
+          <li><strong>Formula:</strong> RRI = ln(KRACH), producing a linear-like scale from an exponential KRACH base</li>
+          <li><strong>Score margins matter:</strong> A 15-1 win counts more than a 8-7 win. Winners earn <em>score/(score_A+score_B)</em>, losers earn the complement</li>
+          <li><strong>Chain of opponents:</strong> RRI requires a connected path of results between any two teams being compared. Disconnected teams cannot be meaningfully compared</li>
+          <li><strong>Previous year supplement:</strong> Early in the season, prior-year games are used for scheduling. For State seeding, only current-year games count</li>
+          <li><strong>~3 rounds needed:</strong> RRI is unreliable until enough inter-team connections form</li>
+        </ul>
+      </div>
+      <div class="nc">
+        <h3>Shortcomings &amp; Unknowns</h3>
+        <ul>
+          <li><strong>Partial tournament coverage:</strong> 333 games computed here cover regular-season league play plus Matoska Classic, Spring Jamboree, and Hopkins Hustle D1 bracket. Hopkins Hustle pool play and D2/D3 results are not yet available — this explains remaining discrepancies</li>
+          <li><strong>Previous-year weighting:</strong> MNU may include prior-year games in current standings. Those games are not available here</li>
+          <li><strong>Undefeated edge cases:</strong> Benilde (7-0) and St Paul Academy (6-0) theoretically produce infinite KRACH. MNU handles this (likely via smoothing), method undisclosed. This computation uses 0.01 minimum win value as a floor</li>
+          <li><strong>Out-of-state opponents:</strong> 4 Wisconsin teams (Matoska Classic) are included in KRACH math for strength-of-schedule accuracy but do not appear in MN rankings. Games vs WI teams count for MN team KRACH but not MNU official records</li>
+          <li><strong>Small samples:</strong> Teams with few games in this dataset (Providence: 4 games, Hopkins JV: 5, Eagan JV: 5) have less stable computed RRI values</li>
+          <li><strong>Score-weighted wins:</strong> My computation uses point differential per game as the RRI weight. MNU's exact formula may differ slightly</li>
+          <li><strong>Published scale:</strong> MNU's published logarithmic scale may be shifted/normalized differently than this computation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>Biggest computed vs official discrepancies:</strong> St Paul Academy (MNU #19, computed #29, −10), Prior Lake (MNU #33, computed #23, +10), Wayzata (MNU #40, computed #31, +9), St Louis Park JV (MNU #21, computed #28, −7), Andover JV (MNU #25, computed #32, −7). These gaps likely reflect missing Hopkins Hustle pool play and possible committee adjustments beyond pure KRACH.
+    </div>
+  </div>
+</div>
+
+<!-- SPECTRUM TAB -->
+<div class="tab-pane" id="tab-spectrum">
+  <div class="ic-grid" id="icGrid"></div>
+  <div class="chart-box">
+    <h2>RRI Spectrum — Team Strength Landscape</h2>
+    <p>Teams are positioned by their computed RRI score. The horizontal distance between any two teams shows their true strength gap. Teams clustered together are likely coin-flip matchups; wide separations mean one team is a heavy favorite.</p>
+    <div style="overflow-x:auto">
+      <svg id="specSvg" style="width:100%;min-width:700px;height:380px;display:block;" viewBox="0 0 1000 380"></svg>
+    </div>
+    <p style="margin-top:8px;font-size:11px">Hover over a dot for team details. RRI range: −2.77 to +2.70. A gap of 1.0 RRI = 73% win probability for the stronger team. A gap of 0.2 = 55%.</p>
+  </div>
+  <div class="chart-box">
+    <h2>MNU Official Rank vs Computed RRI Rank</h2>
+    <p>Each dot is a team. Points on the diagonal are ranked identically by both MNU and the computed RRI. Points above the line are ranked higher by our computation (likely has more tournament games than available here); points below are ranked higher by MNU official.</p>
+    <canvas id="scatterCanvas" height="400"></canvas>
+  </div>
+</div>
+
+<!-- CONFERENCE TAB -->
+<div class="tab-pane" id="tab-conference">
+  <p style="margin-bottom:14px;color:var(--mx);font-size:13px;">Top 4 teams per conference advance to conference playoffs. Conference rank is determined by overall MN-RRI standing. RRI shown is the computed score from 333 games.</p>
+  <div class="cgrid" id="cgrid"></div>
+</div>
+
+<!-- ABOUT TAB -->
+<div class="tab-pane" id="tab-about">
+  <div class="exp">
+    <h2>How Are MNU Standings Determined?</h2>
+    <p><em>Based on MNU Staff and High School Committee documentation (standings.pdf).</em></p>
+    <div class="callout">MNU uses <strong>MN-RRI</strong>, a modified version of USA Ultimate's RRI — the same system that determines club and college nationals bids. It has been refined over 5+ years for the unique challenges of high school ultimate.</div>
+
+    <h3>KRACH — The Foundation</h3>
+    <p>KRACH (<em>Ken's Rating for American College Hockey</em>) applies the Bradley-Terry model to produce dimensionless numbers predicting the odds for any two teams in a head-to-head match. If A has KRACH = 200 and B has KRACH = 100, A has 2-to-1 odds — a 67% win probability.</p>
+    <p>The Bradley-Terry maximum-likelihood estimate is solved iteratively:</p>
+    <div class="formula">KRACH_i = W_i / Σ_j [ games(i,j) / (KRACH_i + KRACH_j) ]</div>
+    <p>Where <em>W_i</em> is team i's total win value (score-weighted). This self-referential equation is iterated until convergence (this computation needed 900 iterations to reach 10⁻⁹ precision).</p>
+
+    <h3>RRI — Adapted for Ultimate</h3>
+    <ul>
+      <li><strong>Score margins:</strong> Each game, the winner earns <em>score_winner / (score_winner + score_loser)</em>. A 15-1 blowout gives the winner 0.938; a 8-7 squeaker gives only 0.533.</li>
+      <li><strong>Logarithmic scale:</strong> RRI = ln(KRACH). This compresses the enormous KRACH range into a manageable scale while preserving all relative information.</li>
+    </ul>
+    <div class="formula">RRI = ln(KRACH)</div>
+    <p>A difference of 1.0 RRI → e ≈ 2.72× KRACH ratio → 73% win probability for the higher team. A difference of 0.2 → 55% probability. A difference of 0 → exactly 50/50.</p>
+
+    <h3>Strength of Schedule</h3>
+    <p>The Bradley-Terry model's key property: it propagates strength through chains of results. If A beat B who beat C, then A's KRACH is implicitly anchored to C's, even if they never played. This is exactly strength-of-schedule accounting — no manual adjustment needed.</p>
+
+    <h3>How MNU Applies It</h3>
+    <ul>
+      <li>Only <strong>sanctioned tournaments between League teams</strong> count</li>
+      <li>Early in the season, prior-year games supplement current data for scheduling</li>
+      <li>For the <strong>State Championship</strong>, only current-year games are used</li>
+      <li>MNU publishes a <strong>logarithmic scale</strong>, not raw KRACH, because raw values span near-0 to hundreds of millions</li>
+      <li>Reliable RRI requires approximately <strong>3 rounds</strong> of games for sufficient chain connectivity</li>
+    </ul>
+
+    <h3>Special Cases</h3>
+    <ul>
+      <li><strong>Undefeated teams</strong> (Benilde 7-0, St Paul Academy 6-0): Pure KRACH → ∞. MNU handles this; method undisclosed. This computation adds a minimum win floor (0.01) to stabilize.</li>
+      <li><strong>Winless teams</strong>: KRACH → 0 / RRI → −∞. Same floor approach.</li>
+      <li><strong>Disconnected teams</strong>: If no result chain connects two teams, their relative RRI is undefined.</li>
+    </ul>
+
+    <div class="callout"><strong>Why it matters:</strong> As MNU approaches field capacity at State, RRI provides a transparent, objective, bias-free selection method — grounded entirely in game results, not committee opinion.</div>
+  </div>
+</div>
+</main>
+
+<footer>2026 MNU HS Open League · KRACH/RRI computed from 333 games (league + Matoska, Jamboree, Hopkins Hustle) via Bradley-Terry MLE (900 iterations) ·
+  <a href="https://www.minnesotaultimate.org/how-are-standings-determined" target="_blank">Official algorithm</a>
+</footer>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+const CC = {"Lake":"#388bfd","Twin Cities":"#a371f7","North Suburban":"#3fb950","Suburban East":"#f85149","Classic Suburban":"#e3b341","South Suburban":"#39d3bb"};
+
+// Computed RRI scores from Bradley-Terry MLE on 333 games (league + Matoska Classic, Spring Jamboree, Hopkins Hustle)
+// 4 out-of-state WI teams included in KRACH calculation for SOS accuracy but excluded from MN display
+const RRI_MAP = {
+  "Edina":{rri:2.771,krach:15.981,calcRank:1,gp:17},
+  "Minneapolis Washburn":{rri:2.407,krach:11.096,calcRank:2,gp:17},
+  "Andover":{rri:2.320,krach:10.175,calcRank:3,gp:16},
+  "Minneapolis South":{rri:2.219,krach:9.196,calcRank:4,gp:21},
+  "Great River School":{rri:2.083,krach:8.025,calcRank:5,gp:16},
+  "St Paul Central":{rri:2.037,krach:7.669,calcRank:6,gp:21},
+  "St Louis Park":{rri:1.794,krach:6.015,calcRank:7,gp:17},
+  "Mounds View":{rri:1.764,krach:5.838,calcRank:8,gp:17},
+  "Apple Valley":{rri:1.582,krach:4.866,calcRank:9,gp:15},
+  "White Bear Lake":{rri:1.494,krach:4.453,calcRank:10,gp:14},
+  "Open World Learning Community":{rri:1.387,krach:4.002,calcRank:11,gp:16},
+  "Woodbury":{rri:1.376,krach:3.957,calcRank:12,gp:9},
+  "Hopkins":{rri:1.350,krach:3.859,calcRank:13,gp:11},
+  "Minnetonka":{rri:1.136,krach:3.115,calcRank:14,gp:13},
+  "Maple Grove":{rri:1.077,krach:2.935,calcRank:15,gp:14},
+  "Eagan":{rri:0.780,krach:2.182,calcRank:16,gp:10},
+  "Cathedral":{rri:0.677,krach:1.968,calcRank:17,gp:6},
+  "Benilde-St Margaret's":{rri:0.581,krach:1.788,calcRank:18,gp:6},
+  "Blake":{rri:0.331,krach:1.392,calcRank:19,gp:6},
+  "Lakeville North":{rri:0.086,krach:1.090,calcRank:20,gp:13},
+  "East Ridge":{rri:0.063,krach:1.065,calcRank:21,gp:12},
+  "Edina JV1":{rri:0.024,krach:1.024,calcRank:22,gp:14},
+  "Prior Lake":{rri:-0.008,krach:0.992,calcRank:23,gp:13},
+  "Edina JV2":{rri:-0.022,krach:0.978,calcRank:24,gp:8},
+  "Lakeville South":{rri:-0.103,krach:0.902,calcRank:25,gp:13},
+  "Roseville":{rri:-0.170,krach:0.844,calcRank:26,gp:13},
+  "Great River School JV":{rri:-0.176,krach:0.838,calcRank:27,gp:12},
+  "St Louis Park JV":{rri:-0.197,krach:0.821,calcRank:28,gp:14},
+  "St Paul Academy":{rri:-0.198,krach:0.820,calcRank:29,gp:8},
+  "Rosemount":{rri:-0.295,krach:0.744,calcRank:30,gp:13},
+  "Wayzata":{rri:-0.356,krach:0.700,calcRank:31,gp:8},
+  "Andover JV":{rri:-0.370,krach:0.691,calcRank:32,gp:13},
+  "Minneapolis South JV":{rri:-0.395,krach:0.674,calcRank:33,gp:14},
+  "White Bear Lake JV":{rri:-0.473,krach:0.623,calcRank:34,gp:13},
+  "St Thomas Academy":{rri:-0.533,krach:0.587,calcRank:35,gp:7},
+  "Mounds View JV":{rri:-0.568,krach:0.567,calcRank:36,gp:13},
+  "Minneapolis Washburn JV":{rri:-0.585,krach:0.557,calcRank:37,gp:12},
+  "Eden Prairie":{rri:-0.746,krach:0.474,calcRank:38,gp:7},
+  "Hopkins JV":{rri:-0.817,krach:0.442,calcRank:39,gp:5},
+  "Irondale":{rri:-0.846,krach:0.429,calcRank:40,gp:12},
+  "Cretin-Derham Hall":{rri:-0.941,krach:0.390,calcRank:41,gp:15},
+  "Red Wing":{rri:-1.026,krach:0.358,calcRank:42,gp:12},
+  "Minneapolis Southwest":{rri:-1.043,krach:0.352,calcRank:43,gp:12},
+  "Stillwater Area":{rri:-1.055,krach:0.348,calcRank:44,gp:13},
+  "St Paul Central JV":{rri:-1.125,krach:0.325,calcRank:45,gp:11},
+  "Robbinsdale Cooper":{rri:-1.240,krach:0.289,calcRank:46,gp:6},
+  "Open World Learning Community JV":{rri:-1.287,krach:0.276,calcRank:47,gp:12},
+  "Apple Valley JV":{rri:-1.373,krach:0.253,calcRank:48,gp:7},
+  "Avalon":{rri:-1.475,krach:0.229,calcRank:49,gp:7},
+  "Eagan JV":{rri:-1.511,krach:0.221,calcRank:50,gp:5},
+  "Bloomington":{rri:-1.557,krach:0.211,calcRank:51,gp:7},
+  "Minnetonka JV":{rri:-1.613,krach:0.199,calcRank:52,gp:6},
+  "Richfield":{rri:-1.679,krach:0.187,calcRank:53,gp:7},
+  "Hastings":{rri:-1.929,krach:0.145,calcRank:54,gp:5},
+  "Mounds View JV2":{rri:-1.998,krach:0.136,calcRank:55,gp:12},
+  "East Ridge JV":{rri:-2.604,krach:0.074,calcRank:56,gp:5},
+  "Prior Lake JV":{rri:-2.652,krach:0.070,calcRank:57,gp:8},
+  "Providence Academy":{rri:-2.945,krach:0.053,calcRank:58,gp:4},
+};
+
+const MNU = [
+  {rank:1, conf:"Lake",             team:"Edina",                             wins:12,losses:1},
+  {rank:2, conf:"Twin Cities",      team:"Minneapolis Washburn",              wins:11,losses:2},
+  {rank:3, conf:"Twin Cities",      team:"Minneapolis South",                 wins:9, losses:4},
+  {rank:4, conf:"North Suburban",   team:"Andover",                           wins:11,losses:2},
+  {rank:5, conf:"Suburban East",    team:"Great River School",                wins:10,losses:3},
+  {rank:6, conf:"Suburban East",    team:"St Paul Central",                   wins:8, losses:5},
+  {rank:7, conf:"North Suburban",   team:"St Louis Park",                     wins:4, losses:8},
+  {rank:8, conf:"Classic Suburban", team:"White Bear Lake",                   wins:10,losses:2},
+  {rank:9, conf:"South Suburban",   team:"Apple Valley",                      wins:8, losses:4},
+  {rank:10,conf:"Classic Suburban", team:"Mounds View",                       wins:5, losses:8},
+  {rank:11,conf:"Lake",             team:"Hopkins",                           wins:2, losses:5},
+  {rank:12,conf:"Classic Suburban", team:"Woodbury",                          wins:7, losses:5},
+  {rank:13,conf:"Lake",             team:"Minnetonka",                        wins:10,losses:2},
+  {rank:14,conf:"Suburban East",    team:"Open World Learning Community",     wins:3, losses:10},
+  {rank:15,conf:"Twin Cities",      team:"Benilde-St Margaret's",             wins:7, losses:0},
+  {rank:16,conf:"North Suburban",   team:"Maple Grove",                       wins:9, losses:9},
+  {rank:17,conf:"North Suburban",   team:"Cathedral",                         wins:3, losses:4},
+  {rank:18,conf:"South Suburban",   team:"Eagan",                             wins:4, losses:8},
+  {rank:19,conf:"Suburban East",    team:"St Paul Academy",                   wins:6, losses:0},
+  {rank:20,conf:"South Suburban",   team:"Lakeville North",                   wins:9, losses:4},
+  {rank:21,conf:"North Suburban",   team:"St Louis Park JV",                  wins:11,losses:2},
+  {rank:22,conf:"Twin Cities",      team:"Blake",                             wins:3, losses:4},
+  {rank:23,conf:"Lake",             team:"Edina JV2",                         wins:9, losses:3},
+  {rank:24,conf:"Suburban East",    team:"Great River School JV",             wins:7, losses:4},
+  {rank:25,conf:"North Suburban",   team:"Andover JV",                        wins:11,losses:2},
+  {rank:26,conf:"Classic Suburban", team:"East Ridge",                        wins:5, losses:8},
+  {rank:27,conf:"Lake",             team:"Edina JV1",                         wins:9, losses:9},
+  {rank:28,conf:"South Suburban",   team:"Lakeville South",                   wins:7, losses:6},
+  {rank:29,conf:"Suburban East",    team:"St Thomas Academy",                 wins:4, losses:2},
+  {rank:30,conf:"Twin Cities",      team:"Minneapolis South JV",              wins:9, losses:4},
+  {rank:31,conf:"Classic Suburban", team:"White Bear Lake JV",                wins:8, losses:5},
+  {rank:32,conf:"Classic Suburban", team:"Roseville",                         wins:5, losses:8},
+  {rank:33,conf:"Lake",             team:"Prior Lake",                        wins:6, losses:7},
+  {rank:34,conf:"South Suburban",   team:"Rosemount",                         wins:5, losses:8},
+  {rank:35,conf:"Twin Cities",      team:"Minneapolis Washburn JV",           wins:9, losses:4},
+  {rank:36,conf:"Lake",             team:"Hopkins JV",                        wins:3, losses:2},
+  {rank:37,conf:"Classic Suburban", team:"Mounds View JV",                    wins:4, losses:9},
+  {rank:38,conf:"Classic Suburban", team:"Irondale",                          wins:4, losses:8},
+  {rank:39,conf:"Lake",             team:"Eden Prairie",                      wins:3, losses:4},
+  {rank:40,conf:"North Suburban",   team:"Wayzata",                           wins:1, losses:11},
+  {rank:41,conf:"Twin Cities",      team:"Minneapolis Southwest",             wins:7, losses:6},
+  {rank:42,conf:"South Suburban",   team:"Red Wing",                          wins:6, losses:6},
+  {rank:43,conf:"Suburban East",    team:"St Paul Central JV",                wins:4, losses:8},
+  {rank:44,conf:"Classic Suburban", team:"Stillwater Area",                   wins:2, losses:11},
+  {rank:45,conf:"Suburban East",    team:"Cretin-Derham Hall",                wins:2, losses:16},
+  {rank:46,conf:"North Suburban",   team:"Robbinsdale Cooper",                wins:1, losses:5},
+  {rank:47,conf:"Suburban East",    team:"Open World Learning Community JV",  wins:7, losses:6},
+  {rank:48,conf:"South Suburban",   team:"Apple Valley JV",                   wins:3, losses:3},
+  {rank:49,conf:"South Suburban",   team:"Eagan JV",                          wins:4, losses:2},
+  {rank:50,conf:"Lake",             team:"Minnetonka JV",                     wins:1, losses:4},
+  {rank:51,conf:"Twin Cities",      team:"Richfield",                         wins:1, losses:6},
+  {rank:52,conf:"Classic Suburban", team:"Mounds View JV2",                   wins:2, losses:11},
+  {rank:53,conf:"Suburban East",    team:"Avalon",                            wins:1, losses:5},
+  {rank:54,conf:"Twin Cities",      team:"Bloomington",                       wins:0, losses:7},
+  {rank:55,conf:"Classic Suburban", team:"East Ridge JV",                     wins:1, losses:5},
+  {rank:56,conf:"South Suburban",   team:"Hastings",                          wins:0, losses:6},
+  {rank:57,conf:"Lake",             team:"Prior Lake JV",                     wins:0, losses:6},
+  {rank:58,conf:"North Suburban",   team:"Providence Academy",                wins:0, losses:4},
+];
+
+// Enrich
+const TEAMS = MNU.map(t => {
+  const r = RRI_MAP[t.team] || {rri:0,krach:1,calcRank:t.rank,gp:0};
+  const gp = t.wins + t.losses;
+  const wp = gp ? t.wins/gp : 0;
+  return {...t, gp, winPct:wp, rri:r.rri, krach:r.krach, calcRank:r.calcRank, calcGp:r.gp,
+    rankDiff: r.calcRank - t.rank, // positive = we say they're better than MNU says
+    cc: CC[t.conf], isJV:/\bjv\b/i.test(t.team)};
+});
+
+// RRI gap between consecutive MNU-ranked teams (used by spectrum tab insight cards)
+TEAMS.sort((a,b)=>a.rank-b.rank);
+TEAMS.forEach((t,i)=>{
+  const next = TEAMS[i+1];
+  t.rriGap = next ? t.rri - next.rri : null;
+});
+
+// Stats
+const confs = Object.keys(CC);
+const totalGp = TEAMS.reduce((s,t)=>s+t.gp,0)/2;
+document.getElementById('statsBar').innerHTML = [['58','Teams'],[confs.length,'Conferences'],[Math.round(totalGp),'Games']].map(([v,l])=>`<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+
+document.getElementById('legend').innerHTML = confs.map(c=>`<span class="ldot"><span class="lc" style="background:${CC[c]}"></span>${c}</span>`).join('');
+
+// ── TABLE ──────────────────────────────────────────────────────────────────────
+let showJV=true, cFlt='', srch='', sField='rank', sDir=1;
+
+const TIERS=[{after:0,lbl:'Tier 1 — Division I Contenders (Ranks 1–10)'},{after:10,lbl:'Tier 2 — Division I Field (Ranks 11–32)'},{after:32,lbl:'Tier 3 — Division II / Development (Ranks 33–58)'}];
+
+function rriClass(v){return v>0.8?'rri-hi':v>-0.5?'rri-md':'rri-lo';}
+
+
+function diffEl(d){
+  if(d===0) return `<span class="diff-eq">—</span>`;
+  // rankDiff = calcRank - mnuRank; negative means our calc says they're better
+  const v = -d; // positive = our calc says higher rank (better)
+  if(v>0) return `<span class="diff-up">+${v} ↑</span>`;
+  return `<span class="diff-dn">${v} ↓</span>`;
+}
+
+function buildTable(){
+  const rows = sField==='rank' ? TEAMS : [...TEAMS].sort((a,b)=>{
+    let av=a[sField], bv=b[sField];
+    if(typeof av==='string'){av=av.toLowerCase();bv=bv.toLowerCase();}
+    return (av<bv?-1:av>bv?1:0)*sDir;
+  });
+  let html=''; let ti=0;
+  rows.forEach((t,i)=>{
+    if(sField==='rank'){ while(ti<TIERS.length&&TIERS[ti].after===i){html+=`<tr class="tier-hdr"><td colspan="7">${TIERS[ti].lbl}</td></tr>`;ti++;} }
+    const jv=t.isJV?'jv-row':'';
+    const wp=(t.winPct*100).toFixed(1);
+    const bclr=t.winPct>=0.65?'#3fb950':t.winPct>=0.4?'#d29922':'#f85149';
+    const rclr=t.rank===1?'r1':t.rank<=5?'r5':t.rank<=10?'r10':'';
+    const cn=t.team.replace(/\s*JV\d*/i,'').trim();
+    const jvb=t.isJV?`<span class="jv-b">JV${t.team.match(/JV(\d+)/i)?.[1]||''}</span>`:'';
+    html+=`<tr data-conf="${t.conf}" data-rank="${t.rank}" class="${jv}">
+      <td class="rk ${rclr}">${t.rank}</td>
+      <td class="team-nm"><span class="cdot" style="background:${t.cc}"></span>${cn}${jvb}</td>
+      <td><span class="cbadge" style="color:${t.cc};border-color:${t.cc}20;background:${t.cc}15">${t.conf}</span></td>
+      <td style="white-space:nowrap"><span class="rw">${t.wins}</span><span style="color:var(--dm)"> – </span><span class="rl">${t.losses}</span></td>
+      <td><div class="wpw"><span class="wpv">${wp}%</span><div class="wpb"><div class="wpf" style="width:${wp}%;background:${bclr}"></div></div></div></td>
+      <td class="rri-v ${rriClass(t.rri)}">${t.rri.toFixed(3)}</td>
+      <td>${diffEl(t.rankDiff)}</td>
+    </tr>`;
+  });
+  document.getElementById('tbody').innerHTML=html;
+  filterTbl();
+}
+
+function filterTbl(){
+  document.querySelectorAll('#tbody tr[data-rank]').forEach(r=>{
+    const isJV=r.classList.contains('jv-row');
+    const nm=r.querySelector('.team-nm').textContent.toLowerCase();
+    let show=true;
+    if(!showJV&&isJV)show=false;
+    if(cFlt&&r.dataset.conf!==cFlt)show=false;
+    if(srch&&!nm.includes(srch))show=false;
+    r.classList.toggle('hidden',!show);
+  });
+}
+
+document.querySelectorAll('thead th[data-s]').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const f=th.dataset.s; if(!f)return;
+    sDir=sField===f?sDir*-1:(f==='rank'?1:-1); sField=f;
+    document.querySelectorAll('thead th').forEach(h=>h.classList.remove('sorted'));
+    th.classList.add('sorted');
+    th.querySelector('.si').textContent=sDir===1?'▲':'▼';
+    buildTable();
+  });
+});
+document.getElementById('srch').addEventListener('input',e=>{srch=e.target.value.toLowerCase();filterTbl();});
+document.getElementById('cflt').addEventListener('change',e=>{cFlt=e.target.value;filterTbl();});
+document.getElementById('jvTgl').addEventListener('click',function(){
+  showJV=!showJV; this.classList.toggle('on',showJV);
+  this.textContent=showJV?'Show JV':'Hide JV'; filterTbl();
+});
+buildTable();
+
+// ── SPECTRUM SVG ───────────────────────────────────────────────────────────────
+(function(){
+  const svg=document.getElementById('specSvg');
+  const W=1000,H=380,PAD={l:30,r:30,t:60,b:60};
+  const rriMin=-2.9, rriMax=2.9;
+  const xScale=v=>(v-rriMin)/(rriMax-rriMin)*(W-PAD.l-PAD.r)+PAD.l;
+  const ROWS=5; // jitter into rows to avoid overlap
+  const rowH=(H-PAD.t-PAD.b)/ROWS;
+  const rowY=i=>PAD.t+(i+0.5)*rowH;
+
+  // Assign rows by spreading teams
+  const sorted=[...TEAMS].sort((a,b)=>b.rri-a.rri);
+  const rowCounts=new Array(ROWS).fill(0);
+  sorted.forEach(t=>{
+    let bestRow=0, bestScore=Infinity;
+    for(let r=0;r<ROWS;r++){const y=rowY(r); if(rowCounts[r]<bestScore){bestScore=rowCounts[r];bestRow=r;}}
+    t._row=bestRow; rowCounts[bestRow]++;
+  });
+
+  // Draw axis
+  const axisTicks=[-2,-1,0,1,2];
+  let axisHtml='';
+  axisTicks.forEach(v=>{
+    const x=xScale(v);
+    axisHtml+=`<line x1="${x}" y1="${PAD.t}" x2="${x}" y2="${H-PAD.b}" stroke="rgba(255,255,255,.06)" stroke-width="1"/>`;
+    axisHtml+=`<text x="${x}" y="${H-PAD.b+14}" text-anchor="middle" font-size="11" fill="#484f58">${v}</text>`;
+    axisHtml+=`<text x="${x}" y="${PAD.t-6}" text-anchor="middle" font-size="9" fill="#484f58">${v===0?'50/50':v>0?v+'→'+(100/(1+Math.exp(-Math.abs(v)))).toFixed(0)+'%':'←'+(100/(1+Math.exp(-Math.abs(v)))).toFixed(0)+'%'}</text>`;
+  });
+  axisHtml+=`<line x1="${PAD.l}" y1="${H-PAD.b}" x2="${W-PAD.r}" y2="${H-PAD.b}" stroke="#30363d" stroke-width="1"/>`;
+  axisHtml+=`<text x="${W/2}" y="${H-3}" text-anchor="middle" font-size="11" fill="#484f58">RRI Score (computed from 333 games)</text>`;
+
+  // Draw dots
+  const dotsHtml=sorted.map(t=>{
+    const x=xScale(t.rri);
+    const y=rowY(t._row);
+    const cn=t.team.replace(/\s*JV\d*/i,'').trim();
+    return `<circle class="spec-dot" cx="${x}" cy="${y}" r="6" fill="${t.cc}cc" stroke="${t.cc}" stroke-width="1.5">
+      <title>#${t.rank} ${t.team}\nRRI: ${t.rri.toFixed(3)} | KRACH: ${t.krach.toFixed(3)}\n${t.wins}-${t.losses} | ${t.conf}</title>
+    </circle>`;
+  }).join('');
+
+  svg.innerHTML=axisHtml+dotsHtml;
+})();
+
+// ── INSIGHT CARDS ──────────────────────────────────────────────────────────────
+(function(){
+  const valid=TEAMS.filter(t=>t.calcGp>=5);
+
+  // Our calc says they should be ranked higher
+  const computedHigher=[...valid].sort((a,b)=>(b.rankDiff-b.rankDiff)||(a.rankDiff-b.rankDiff)).filter(t=>t.rankDiff<0).slice(0,5);
+  // Our calc says they should be ranked lower
+  const computedLower=[...valid].filter(t=>t.rankDiff>0).sort((a,b)=>b.rankDiff-a.rankDiff).slice(0,5);
+  // Closest consecutive (smallest positive gap)
+  const closest=TEAMS.filter(t=>t.rriGap!==null&&t.rriGap>=0).sort((a,b)=>a.rriGap-b.rriGap).slice(0,5);
+  // Flip (MNU lower-ranked team has higher RRI)
+  const flips=TEAMS.filter(t=>t.rriGap!==null&&t.rriGap<0).sort((a,b)=>a.rriGap-b.rriGap).slice(0,5);
+
+  function mkCard(title,items,type){
+    const rows=items.map(t=>{
+      let badge;
+      if(type==='higher') badge=`<span class="bover">Calc #${t.calcRank} vs MNU #${t.rank}</span>`;
+      else if(type==='lower') badge=`<span class="bunder">Calc #${t.calcRank} vs MNU #${t.rank}</span>`;
+      else if(type==='close') badge=`<span class="bclose">${t.rriGap.toFixed(3)} RRI</span>`;
+      else badge=`<span class="bflip">Upset: ${Math.abs(t.rriGap).toFixed(3)} RRI</span>`;
+      return `<li><span><span class="ir">#${t.rank}</span>${t.team.replace(/\s*JV\d*/i,'').trim()}</span>${badge}</li>`;
+    }).join('');
+    return `<div class="ic"><h3>${title}</h3><ul>${rows}</ul></div>`;
+  }
+
+  document.getElementById('icGrid').innerHTML=
+    mkCard('Computed rank HIGHER than official (likely need tournament data)',computedHigher,'higher')+
+    mkCard('Computed rank LOWER than official (MNU sees more games)',computedLower,'lower')+
+    mkCard('Tightest consecutive matchups (by computed RRI)',closest,'close')+
+    mkCard('RRI "Upsets" — lower MNU rank has higher computed RRI',flips,'flip');
+})();
+
+// ── SCATTER: MNU rank vs computed rank ───────────────────────────────────────
+new Chart(document.getElementById('scatterCanvas'),{
+  type:'scatter',
+  data:{datasets:[
+    {label:'Diagonal (perfect agreement)',data:[{x:1,y:1},{x:58,y:58}],type:'line',borderColor:'rgba(255,255,255,.12)',borderWidth:2,borderDash:[5,3],pointRadius:0,fill:false},
+    ...Object.keys(CC).map(c=>({
+      label:c,
+      data:TEAMS.filter(t=>t.conf===c).map(t=>({x:t.rank,y:t.calcRank,team:t.team,rri:t.rri,rec:`${t.wins}–${t.losses}`})),
+      backgroundColor:CC[c]+'cc',borderColor:CC[c],borderWidth:1,pointRadius:6,pointHoverRadius:9,
+    }))
+  ]},
+  options:{
+    responsive:true,animation:{duration:300},
+    scales:{
+      x:{title:{display:true,text:'MNU Official Rank',color:'#8b949e'},min:0,max:60,grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8b949e'}},
+      y:{title:{display:true,text:'Computed RRI Rank',color:'#8b949e'},min:0,max:60,grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8b949e'}},
+    },
+    plugins:{
+      legend:{labels:{color:'#e6edf3',boxWidth:12,padding:12}},
+      tooltip:{backgroundColor:'#21262d',borderColor:'#30363d',borderWidth:1,titleColor:'#e6edf3',bodyColor:'#8b949e',
+        callbacks:{
+          title:i=>i[0].raw.team||'',
+          label:i=>{const d=i.raw;if(!d.team)return '';return[`${d.team}`,`MNU Rank: #${d.x}`,`Computed Rank: #${d.y}`,`RRI: ${d.rri.toFixed(3)}`,`Record: ${d.rec}`];}
+        }
+      }
+    }
+  }
+});
+
+// ── CONFERENCE VIEW ───────────────────────────────────────────────────────────
+document.getElementById('cgrid').innerHTML=confs.map(c=>{
+  const ct=TEAMS.filter(t=>t.conf===c);
+  return `<div class="ccard">
+    <div class="chdr"><span class="lc" style="background:${CC[c]}"></span>${c}<span style="margin-left:auto;font-size:12px;font-weight:400;color:var(--mx)">${ct.length} teams</span></div>
+    ${ct.map((t,i)=>`<div class="crow ${i<4?'po':''}">
+      <span class="crk">${i+1}.</span>
+      <span class="cnm">${t.team}</span>
+      <span class="covr">#${t.rank}</span>
+      <span class="crri ${rriClass(t.rri)}">${t.rri.toFixed(2)}</span>
+      ${i<4?'<span class="po-badge">Playoff</span>':''}
+    </div>`).join('')}
+  </div>`;
+}).join('');
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn,.tab-pane').forEach(e=>e.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
