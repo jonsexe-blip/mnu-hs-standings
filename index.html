@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>2026 MNU HS Open League Standings</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root{--bg:#0d1117;--s1:#161b22;--s2:#21262d;--s3:#2d333b;--bd:#30363d;--tx:#e6edf3;--mx:#8b949e;--dm:#484f58;--pr:#388bfd;--pd:#1f4287;--ac:#f0883e;--gr:#3fb950;--yw:#d29922;--rd:#f85149;}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -109,13 +108,9 @@ tbody tr.jv-row.jv-hidden{display:none;}
 .chart-box p{font-size:13px;color:var(--mx);margin-bottom:14px;line-height:1.6;}
 
 /* SPECTRUM SVG */
-#spectrumSvg{width:100%;overflow:visible;}
-.spec-dot{cursor:pointer;transition:r .15s;}
-.spec-dot:hover{r:8px;}
 .spec-label{font-size:10px;fill:var(--mx);pointer-events:none;}
 
 /* INSIGHT CARDS */
-.ic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:16px;}
 .ic{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:13px;}
 .ic h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mx);margin-bottom:8px;}
 .ic ul{list-style:none;}
@@ -124,8 +119,6 @@ tbody tr.jv-row.jv-hidden{display:none;}
 .ir{color:var(--mx);font-size:12px;margin-right:5px;}
 .bover{font-size:11px;padding:2px 6px;border-radius:4px;font-weight:600;background:rgba(63,185,80,.15);color:var(--gr);}
 .bunder{font-size:11px;padding:2px 6px;border-radius:4px;font-weight:600;background:rgba(248,81,73,.15);color:var(--rd);}
-.bclose{font-size:11px;padding:2px 6px;border-radius:4px;font-weight:600;background:rgba(248,81,73,.15);color:var(--rd);}
-.bflip{font-size:11px;padding:2px 6px;border-radius:4px;font-weight:600;background:rgba(163,113,247,.15);color:#a371f7;}
 
 /* CONFERENCE */
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
@@ -170,7 +163,6 @@ footer{text-align:center;padding:18px;color:var(--dm);font-size:12px;border-top:
   </div>
   <nav class="tabs">
     <button class="tab-btn active" data-tab="table">Rankings Table</button>
-    <button class="tab-btn" data-tab="spectrum">RRI Spectrum</button>
     <button class="tab-btn" data-tab="conference">By Conference</button>
     <button class="tab-btn" data-tab="about">About MN-RRI</button>
   </nav>
@@ -238,22 +230,6 @@ footer{text-align:center;padding:18px;color:var(--dm);font-size:12px;border-top:
 </div>
 
 <!-- SPECTRUM TAB -->
-<div class="tab-pane" id="tab-spectrum">
-  <div class="ic-grid" id="icGrid"></div>
-  <div class="chart-box">
-    <h2>RRI Spectrum — Team Strength Landscape</h2>
-    <p>Teams are positioned by their computed RRI score. The horizontal distance between any two teams shows their true strength gap. Teams clustered together are likely coin-flip matchups; wide separations mean one team is a heavy favorite.</p>
-    <div style="overflow-x:auto">
-      <svg id="specSvg" style="width:100%;min-width:700px;height:380px;display:block;" viewBox="0 0 1000 380"></svg>
-    </div>
-    <p style="margin-top:8px;font-size:11px">Hover over a dot for team details. RRI range: −2.77 to +2.70. A gap of 1.0 RRI = 73% win probability for the stronger team. A gap of 0.2 = 55%.</p>
-  </div>
-  <div class="chart-box">
-    <h2>MNU Official Rank vs Computed RRI Rank</h2>
-    <p>Each dot is a team. Points on the diagonal are ranked identically by both MNU and the computed RRI. Points above the line are ranked higher by our computation (likely has more tournament games than available here); points below are ranked higher by MNU official.</p>
-    <canvas id="scatterCanvas" height="400"></canvas>
-  </div>
-</div>
 
 <!-- CONFERENCE TAB -->
 <div class="tab-pane" id="tab-conference">
@@ -448,13 +424,6 @@ const TEAMS = MNU.map(t => {
     cc: CC[t.conf], isJV:/\bjv\b/i.test(t.team)};
 });
 
-// RRI gap between consecutive MNU-ranked teams (used by spectrum tab insight cards)
-TEAMS.sort((a,b)=>a.rank-b.rank);
-TEAMS.forEach((t,i)=>{
-  const next = TEAMS[i+1];
-  t.rriGap = next ? t.rri - next.rri : null;
-});
-
 // Stats
 const confs = Object.keys(CC);
 const totalGp = TEAMS.reduce((s,t)=>s+t.gp,0)/2;
@@ -537,110 +506,6 @@ document.getElementById('jvTgl').addEventListener('click',function(){
 });
 buildTable();
 
-// ── SPECTRUM SVG ───────────────────────────────────────────────────────────────
-(function(){
-  const svg=document.getElementById('specSvg');
-  const W=1000,H=380,PAD={l:30,r:30,t:60,b:60};
-  const rriMin=-2.9, rriMax=2.9;
-  const xScale=v=>(v-rriMin)/(rriMax-rriMin)*(W-PAD.l-PAD.r)+PAD.l;
-  const ROWS=5; // jitter into rows to avoid overlap
-  const rowH=(H-PAD.t-PAD.b)/ROWS;
-  const rowY=i=>PAD.t+(i+0.5)*rowH;
-
-  // Assign rows by spreading teams
-  const sorted=[...TEAMS].sort((a,b)=>b.rri-a.rri);
-  const rowCounts=new Array(ROWS).fill(0);
-  sorted.forEach(t=>{
-    let bestRow=0, bestScore=Infinity;
-    for(let r=0;r<ROWS;r++){const y=rowY(r); if(rowCounts[r]<bestScore){bestScore=rowCounts[r];bestRow=r;}}
-    t._row=bestRow; rowCounts[bestRow]++;
-  });
-
-  // Draw axis
-  const axisTicks=[-2,-1,0,1,2];
-  let axisHtml='';
-  axisTicks.forEach(v=>{
-    const x=xScale(v);
-    axisHtml+=`<line x1="${x}" y1="${PAD.t}" x2="${x}" y2="${H-PAD.b}" stroke="rgba(255,255,255,.06)" stroke-width="1"/>`;
-    axisHtml+=`<text x="${x}" y="${H-PAD.b+14}" text-anchor="middle" font-size="11" fill="#484f58">${v}</text>`;
-    axisHtml+=`<text x="${x}" y="${PAD.t-6}" text-anchor="middle" font-size="9" fill="#484f58">${v===0?'50/50':v>0?v+'→'+(100/(1+Math.exp(-Math.abs(v)))).toFixed(0)+'%':'←'+(100/(1+Math.exp(-Math.abs(v)))).toFixed(0)+'%'}</text>`;
-  });
-  axisHtml+=`<line x1="${PAD.l}" y1="${H-PAD.b}" x2="${W-PAD.r}" y2="${H-PAD.b}" stroke="#30363d" stroke-width="1"/>`;
-  axisHtml+=`<text x="${W/2}" y="${H-3}" text-anchor="middle" font-size="11" fill="#484f58">RRI Score (computed from 333 games)</text>`;
-
-  // Draw dots
-  const dotsHtml=sorted.map(t=>{
-    const x=xScale(t.rri);
-    const y=rowY(t._row);
-    const cn=t.team.replace(/\s*JV\d*/i,'').trim();
-    return `<circle class="spec-dot" cx="${x}" cy="${y}" r="6" fill="${t.cc}cc" stroke="${t.cc}" stroke-width="1.5">
-      <title>#${t.rank} ${t.team}\nRRI: ${t.rri.toFixed(3)} | KRACH: ${t.krach.toFixed(3)}\n${t.wins}-${t.losses} | ${t.conf}</title>
-    </circle>`;
-  }).join('');
-
-  svg.innerHTML=axisHtml+dotsHtml;
-})();
-
-// ── INSIGHT CARDS ──────────────────────────────────────────────────────────────
-(function(){
-  const valid=TEAMS.filter(t=>t.calcGp>=5);
-
-  // Our calc says they should be ranked higher
-  const computedHigher=[...valid].sort((a,b)=>(b.rankDiff-b.rankDiff)||(a.rankDiff-b.rankDiff)).filter(t=>t.rankDiff<0).slice(0,5);
-  // Our calc says they should be ranked lower
-  const computedLower=[...valid].filter(t=>t.rankDiff>0).sort((a,b)=>b.rankDiff-a.rankDiff).slice(0,5);
-  // Closest consecutive (smallest positive gap)
-  const closest=TEAMS.filter(t=>t.rriGap!==null&&t.rriGap>=0).sort((a,b)=>a.rriGap-b.rriGap).slice(0,5);
-  // Flip (MNU lower-ranked team has higher RRI)
-  const flips=TEAMS.filter(t=>t.rriGap!==null&&t.rriGap<0).sort((a,b)=>a.rriGap-b.rriGap).slice(0,5);
-
-  function mkCard(title,items,type){
-    const rows=items.map(t=>{
-      let badge;
-      if(type==='higher') badge=`<span class="bover">Calc #${t.calcRank} vs MNU #${t.rank}</span>`;
-      else if(type==='lower') badge=`<span class="bunder">Calc #${t.calcRank} vs MNU #${t.rank}</span>`;
-      else if(type==='close') badge=`<span class="bclose">${t.rriGap.toFixed(3)} RRI</span>`;
-      else badge=`<span class="bflip">Upset: ${Math.abs(t.rriGap).toFixed(3)} RRI</span>`;
-      return `<li><span><span class="ir">#${t.rank}</span>${t.team.replace(/\s*JV\d*/i,'').trim()}</span>${badge}</li>`;
-    }).join('');
-    return `<div class="ic"><h3>${title}</h3><ul>${rows}</ul></div>`;
-  }
-
-  document.getElementById('icGrid').innerHTML=
-    mkCard('Computed rank HIGHER than official (likely need tournament data)',computedHigher,'higher')+
-    mkCard('Computed rank LOWER than official (MNU sees more games)',computedLower,'lower')+
-    mkCard('Tightest consecutive matchups (by computed RRI)',closest,'close')+
-    mkCard('RRI "Upsets" — lower MNU rank has higher computed RRI',flips,'flip');
-})();
-
-// ── SCATTER: MNU rank vs computed rank ───────────────────────────────────────
-new Chart(document.getElementById('scatterCanvas'),{
-  type:'scatter',
-  data:{datasets:[
-    {label:'Diagonal (perfect agreement)',data:[{x:1,y:1},{x:58,y:58}],type:'line',borderColor:'rgba(255,255,255,.12)',borderWidth:2,borderDash:[5,3],pointRadius:0,fill:false},
-    ...Object.keys(CC).map(c=>({
-      label:c,
-      data:TEAMS.filter(t=>t.conf===c).map(t=>({x:t.rank,y:t.calcRank,team:t.team,rri:t.rri,rec:`${t.wins}–${t.losses}`})),
-      backgroundColor:CC[c]+'cc',borderColor:CC[c],borderWidth:1,pointRadius:6,pointHoverRadius:9,
-    }))
-  ]},
-  options:{
-    responsive:true,animation:{duration:300},
-    scales:{
-      x:{title:{display:true,text:'MNU Official Rank',color:'#8b949e'},min:0,max:60,grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8b949e'}},
-      y:{title:{display:true,text:'Computed RRI Rank',color:'#8b949e'},min:0,max:60,grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8b949e'}},
-    },
-    plugins:{
-      legend:{labels:{color:'#e6edf3',boxWidth:12,padding:12}},
-      tooltip:{backgroundColor:'#21262d',borderColor:'#30363d',borderWidth:1,titleColor:'#e6edf3',bodyColor:'#8b949e',
-        callbacks:{
-          title:i=>i[0].raw.team||'',
-          label:i=>{const d=i.raw;if(!d.team)return '';return[`${d.team}`,`MNU Rank: #${d.x}`,`Computed Rank: #${d.y}`,`RRI: ${d.rri.toFixed(3)}`,`Record: ${d.rec}`];}
-        }
-      }
-    }
-  }
-});
 
 // ── CONFERENCE VIEW ───────────────────────────────────────────────────────────
 document.getElementById('cgrid').innerHTML=confs.map(c=>{
