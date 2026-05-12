@@ -158,7 +158,7 @@ footer{text-align:center;padding:18px;color:var(--dm);font-size:12px;border-top:
   </div>
   <div class="coverage-banner">
     <span>⚠</span>
-    <span><strong>Data note:</strong> KRACH/RRI computed from <strong id="gameCount">333</strong> games (regular season + Matoska Classic D1/D2/D3, Spring Jamboree, Hopkins Hustle D1 bracket).
+    <span><strong>Data note:</strong> KRACH/RRI computed from <strong id="gameCount">334</strong> games (regular season + Matoska Classic D1/D2/D3, Spring Jamboree, Hopkins Hustle D1 bracket).
     Hopkins Hustle pool play and D2/D3 results are not yet available. 4 out-of-state WI teams from Matoska are included in KRACH math for strength-of-schedule accuracy but excluded from these rankings.</span>
   </div>
   <nav class="tabs">
@@ -189,7 +189,7 @@ footer{text-align:center;padding:18px;color:var(--dm);font-size:12px;border-top:
         <th data-s="conf">Conference <span class="si">⇅</span></th>
         <th data-s="wins">Record <span class="si">⇅</span></th>
         <th data-s="winPct">Win% <span class="si">⇅</span></th>
-        <th data-s="rri" title="Computed KRACH/RRI from 333 games using Bradley-Terry maximum-likelihood. RRI = ln(KRACH), normalized to geometric mean = 0.">RRI Score <span class="si">⇅</span></th>
+        <th data-s="rri" title="Computed KRACH/RRI from 334 games using Bradley-Terry maximum-likelihood. RRI = ln(KRACH), normalized to geometric mean = 0.">RRI Score <span class="si">⇅</span></th>
         <th data-s="rankDiff" title="Computed rank minus MNU official rank. Positive = our computation puts this team higher than official.">Calc vs MNU <span class="si">⇅</span></th>
       </tr></thead>
       <tbody id="tbody"></tbody>
@@ -282,7 +282,7 @@ footer{text-align:center;padding:18px;color:var(--dm);font-size:12px;border-top:
 </div>
 </main>
 
-<footer>2026 MNU HS Open League · KRACH/RRI computed from 333 games (league + Matoska, Jamboree, Hopkins Hustle) via Bradley-Terry MLE (900 iterations) ·
+<footer>2026 MNU HS Open League · KRACH/RRI computed from 334 games (league + Matoska, Jamboree, Hopkins Hustle) via Bradley-Terry MLE (900 iterations) ·
   <a href="https://www.minnesotaultimate.org/how-are-standings-determined" target="_blank">Official algorithm</a>
 </footer>
 
@@ -290,67 +290,67 @@ footer{text-align:center;padding:18px;color:var(--dm);font-size:12px;border-top:
 // ── Data ──────────────────────────────────────────────────────────────────────
 const CC = {"Lake":"#388bfd","Twin Cities":"#a371f7","North Suburban":"#3fb950","Suburban East":"#f85149","Classic Suburban":"#e3b341","South Suburban":"#39d3bb"};
 
-// Computed RRI scores from Bradley-Terry MLE on 333 games (league + Matoska Classic, Spring Jamboree, Hopkins Hustle)
+// Computed RRI scores from Bradley-Terry MLE on 334 games (league + Matoska Classic, Spring Jamboree, Hopkins Hustle)
 // 4 out-of-state WI teams included in KRACH calculation for SOS accuracy but excluded from MN display
 const RRI_MAP = {
-  "Edina":{rri:2.771,krach:15.981,calcRank:1,gp:17},
-  "Minneapolis Washburn":{rri:2.407,krach:11.096,calcRank:2,gp:17},
-  "Andover":{rri:2.320,krach:10.175,calcRank:3,gp:16},
-  "Minneapolis South":{rri:2.219,krach:9.196,calcRank:4,gp:21},
-  "Great River School":{rri:2.083,krach:8.025,calcRank:5,gp:16},
-  "St Paul Central":{rri:2.037,krach:7.669,calcRank:6,gp:21},
-  "St Louis Park":{rri:1.794,krach:6.015,calcRank:7,gp:17},
-  "Mounds View":{rri:1.764,krach:5.838,calcRank:8,gp:17},
-  "Apple Valley":{rri:1.582,krach:4.866,calcRank:9,gp:15},
-  "White Bear Lake":{rri:1.494,krach:4.453,calcRank:10,gp:14},
-  "Open World Learning Community":{rri:1.387,krach:4.002,calcRank:11,gp:16},
-  "Woodbury":{rri:1.376,krach:3.957,calcRank:12,gp:9},
-  "Hopkins":{rri:1.350,krach:3.859,calcRank:13,gp:11},
-  "Minnetonka":{rri:1.136,krach:3.115,calcRank:14,gp:13},
-  "Maple Grove":{rri:1.077,krach:2.935,calcRank:15,gp:14},
-  "Eagan":{rri:0.780,krach:2.182,calcRank:16,gp:10},
-  "Cathedral":{rri:0.677,krach:1.968,calcRank:17,gp:6},
-  "Benilde-St Margaret's":{rri:0.581,krach:1.788,calcRank:18,gp:6},
-  "Blake":{rri:0.331,krach:1.392,calcRank:19,gp:6},
-  "Lakeville North":{rri:0.086,krach:1.090,calcRank:20,gp:13},
-  "East Ridge":{rri:0.063,krach:1.065,calcRank:21,gp:12},
-  "Edina JV1":{rri:0.024,krach:1.024,calcRank:22,gp:14},
-  "Prior Lake":{rri:-0.008,krach:0.992,calcRank:23,gp:13},
+  "Edina":{rri:2.769,krach:15.940,calcRank:1,gp:15},
+  "Minneapolis Washburn":{rri:2.439,krach:11.459,calcRank:2,gp:16},
+  "Andover":{rri:2.329,krach:10.267,calcRank:3,gp:16},
+  "Minneapolis South":{rri:2.242,krach:9.412,calcRank:4,gp:20},
+  "Great River School":{rri:2.097,krach:8.138,calcRank:5,gp:17},
+  "St Paul Central":{rri:2.031,krach:7.623,calcRank:6,gp:21},
+  "St Louis Park":{rri:1.802,krach:6.064,calcRank:7,gp:17},
+  "Mounds View":{rri:1.775,krach:5.901,calcRank:8,gp:17},
+  "Apple Valley":{rri:1.589,krach:4.897,calcRank:9,gp:15},
+  "White Bear Lake":{rri:1.494,krach:4.457,calcRank:10,gp:14},
+  "Woodbury":{rri:1.399,krach:4.051,calcRank:11,gp:10},
+  "Open World Learning Community":{rri:1.394,krach:4.033,calcRank:12,gp:16},
+  "Hopkins":{rri:1.320,krach:3.743,calcRank:13,gp:10},
+  "Minnetonka":{rri:1.111,krach:3.038,calcRank:14,gp:14},
+  "Maple Grove":{rri:1.087,krach:2.964,calcRank:15,gp:14},
+  "Eagan":{rri:0.783,krach:2.188,calcRank:16,gp:10},
+  "Cathedral":{rri:0.675,krach:1.965,calcRank:17,gp:6},
+  "Benilde-St Margaret's":{rri:0.579,krach:1.785,calcRank:18,gp:6},
+  "Blake":{rri:0.384,krach:1.469,calcRank:19,gp:7},
+  "Lakeville North":{rri:0.081,krach:1.084,calcRank:20,gp:13},
+  "Edina JV1":{rri:0.022,krach:1.022,calcRank:21,gp:14},
+  "East Ridge":{rri:0.019,krach:1.019,calcRank:22,gp:12},
+  "Prior Lake":{rri:-0.014,krach:0.986,calcRank:23,gp:13},
   "Edina JV2":{rri:-0.022,krach:0.978,calcRank:24,gp:8},
-  "Lakeville South":{rri:-0.103,krach:0.902,calcRank:25,gp:13},
-  "Roseville":{rri:-0.170,krach:0.844,calcRank:26,gp:13},
-  "Great River School JV":{rri:-0.176,krach:0.838,calcRank:27,gp:12},
-  "St Louis Park JV":{rri:-0.197,krach:0.821,calcRank:28,gp:14},
-  "St Paul Academy":{rri:-0.198,krach:0.820,calcRank:29,gp:8},
-  "Rosemount":{rri:-0.295,krach:0.744,calcRank:30,gp:13},
-  "Wayzata":{rri:-0.356,krach:0.700,calcRank:31,gp:8},
-  "Andover JV":{rri:-0.370,krach:0.691,calcRank:32,gp:13},
-  "Minneapolis South JV":{rri:-0.395,krach:0.674,calcRank:33,gp:14},
-  "White Bear Lake JV":{rri:-0.473,krach:0.623,calcRank:34,gp:13},
-  "St Thomas Academy":{rri:-0.533,krach:0.587,calcRank:35,gp:7},
-  "Mounds View JV":{rri:-0.568,krach:0.567,calcRank:36,gp:13},
-  "Minneapolis Washburn JV":{rri:-0.585,krach:0.557,calcRank:37,gp:12},
-  "Eden Prairie":{rri:-0.746,krach:0.474,calcRank:38,gp:7},
-  "Hopkins JV":{rri:-0.817,krach:0.442,calcRank:39,gp:5},
-  "Irondale":{rri:-0.846,krach:0.429,calcRank:40,gp:12},
-  "Cretin-Derham Hall":{rri:-0.941,krach:0.390,calcRank:41,gp:15},
+  "Lakeville South":{rri:-0.105,krach:0.900,calcRank:25,gp:13},
+  "Roseville":{rri:-0.170,krach:0.843,calcRank:26,gp:13},
+  "St Paul Academy":{rri:-0.175,krach:0.840,calcRank:27,gp:7},
+  "St Louis Park JV":{rri:-0.202,krach:0.817,calcRank:28,gp:14},
+  "Great River School JV":{rri:-0.224,krach:0.800,calcRank:29,gp:13},
+  "Rosemount":{rri:-0.297,krach:0.743,calcRank:30,gp:13},
+  "Wayzata":{rri:-0.351,krach:0.704,calcRank:31,gp:8},
+  "Andover JV":{rri:-0.378,krach:0.685,calcRank:32,gp:13},
+  "Minneapolis South JV":{rri:-0.404,krach:0.668,calcRank:33,gp:14},
+  "White Bear Lake JV":{rri:-0.484,krach:0.616,calcRank:34,gp:13},
+  "St Thomas Academy":{rri:-0.532,krach:0.587,calcRank:35,gp:7},
+  "Mounds View JV":{rri:-0.562,krach:0.570,calcRank:36,gp:13},
+  "Minneapolis Washburn JV":{rri:-0.595,krach:0.552,calcRank:37,gp:12},
+  "Eden Prairie":{rri:-0.754,krach:0.471,calcRank:38,gp:7},
+  "Hopkins JV":{rri:-0.819,krach:0.441,calcRank:39,gp:5},
+  "Irondale":{rri:-0.853,krach:0.426,calcRank:40,gp:12},
+  "Cretin-Derham Hall":{rri:-0.918,krach:0.399,calcRank:41,gp:14},
   "Red Wing":{rri:-1.026,krach:0.358,calcRank:42,gp:12},
-  "Minneapolis Southwest":{rri:-1.043,krach:0.352,calcRank:43,gp:12},
-  "Stillwater Area":{rri:-1.055,krach:0.348,calcRank:44,gp:13},
-  "St Paul Central JV":{rri:-1.125,krach:0.325,calcRank:45,gp:11},
-  "Robbinsdale Cooper":{rri:-1.240,krach:0.289,calcRank:46,gp:6},
-  "Open World Learning Community JV":{rri:-1.287,krach:0.276,calcRank:47,gp:12},
-  "Apple Valley JV":{rri:-1.373,krach:0.253,calcRank:48,gp:7},
-  "Avalon":{rri:-1.475,krach:0.229,calcRank:49,gp:7},
-  "Eagan JV":{rri:-1.511,krach:0.221,calcRank:50,gp:5},
-  "Bloomington":{rri:-1.557,krach:0.211,calcRank:51,gp:7},
-  "Minnetonka JV":{rri:-1.613,krach:0.199,calcRank:52,gp:6},
-  "Richfield":{rri:-1.679,krach:0.187,calcRank:53,gp:7},
-  "Hastings":{rri:-1.929,krach:0.145,calcRank:54,gp:5},
-  "Mounds View JV2":{rri:-1.998,krach:0.136,calcRank:55,gp:12},
-  "East Ridge JV":{rri:-2.604,krach:0.074,calcRank:56,gp:5},
-  "Prior Lake JV":{rri:-2.652,krach:0.070,calcRank:57,gp:8},
-  "Providence Academy":{rri:-2.945,krach:0.053,calcRank:58,gp:4},
+  "Minneapolis Southwest":{rri:-1.051,krach:0.350,calcRank:43,gp:12},
+  "Stillwater Area":{rri:-1.054,krach:0.349,calcRank:44,gp:13},
+  "St Paul Central JV":{rri:-1.084,krach:0.338,calcRank:45,gp:12},
+  "Robbinsdale Cooper":{rri:-1.234,krach:0.291,calcRank:46,gp:6},
+  "Open World Learning Community JV":{rri:-1.278,krach:0.279,calcRank:47,gp:13},
+  "Apple Valley JV":{rri:-1.368,krach:0.255,calcRank:48,gp:7},
+  "Eagan JV":{rri:-1.478,krach:0.228,calcRank:49,gp:6},
+  "Bloomington":{rri:-1.559,krach:0.210,calcRank:50,gp:7},
+  "Avalon":{rri:-1.570,krach:0.208,calcRank:51,gp:7},
+  "Minnetonka JV":{rri:-1.605,krach:0.201,calcRank:52,gp:6},
+  "Richfield":{rri:-1.697,krach:0.183,calcRank:53,gp:7},
+  "Hastings":{rri:-1.989,krach:0.137,calcRank:54,gp:6},
+  "Mounds View JV2":{rri:-1.994,krach:0.136,calcRank:55,gp:12},
+  "East Ridge JV":{rri:-2.595,krach:0.075,calcRank:56,gp:5},
+  "Prior Lake JV":{rri:-2.645,krach:0.071,calcRank:57,gp:8},
+  "Providence Academy":{rri:-2.943,krach:0.053,calcRank:58,gp:4},
 };
 
 const MNU = [
