@@ -1,0 +1,11 @@
+node_modules/
+games.json
+rri-results.json
+standings.html
+standings.pdf
+decode-pdf.mjs
+extract-pdf.mjs
+extract-pdf2.mjs
+verify-records.mjs
+package.json
+package-lock.json
