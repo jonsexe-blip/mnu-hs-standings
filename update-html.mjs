@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 
 const WI = new Set(['Madison East', 'Madison West', 'Middleton', 'Verona Area']);
 
@@ -10,10 +10,24 @@ mn.forEach((r, i) => r.mnRank = i + 1);
 
 const count = games.length;
 
+// Load previous snapshot for rank-change indicators
+const prevPath = './prev-rankings.json';
+const prev = existsSync(prevPath) ? JSON.parse(readFileSync(prevPath, 'utf8')) : null;
+
+// chg: positive = moved up, negative = moved down, null = first run
+function rankChange(team, newRank) {
+  if (!prev) return null;
+  const old = prev[team];
+  if (old == null) return null;
+  return old - newRank; // e.g. was 5, now 3 → +2 (improved)
+}
+
 // Build new RRI_MAP block
-const lines = mn.map(r =>
-  `  ${JSON.stringify(r.team)}:{rri:${r.rri.toFixed(3)},krach:${r.krach.toFixed(3)},calcRank:${r.mnRank},gp:${r.gamesPlayed}}`
-);
+const lines = mn.map(r => {
+  const chg = rankChange(r.team, r.mnRank);
+  const chgStr = chg === null ? 'null' : chg;
+  return `  ${JSON.stringify(r.team)}:{rri:${r.rri.toFixed(3)},krach:${r.krach.toFixed(3)},calcRank:${r.mnRank},gp:${r.gamesPlayed},chg:${chgStr}}`;
+});
 const newBlock =
   `// Computed RRI scores from Bradley-Terry MLE on ${count} games (league + Matoska Classic, Spring Jamboree, Hopkins Hustle)\n` +
   `// 4 out-of-state WI teams included in KRACH calculation for SOS accuracy but excluded from MN display\n` +
@@ -41,3 +55,9 @@ if (html === original) {
   writeFileSync('./index.html', html);
   console.log(`Updated index.html (${count} games, ${mn.length} MN teams).`);
 }
+
+// Save current ranks as next run's snapshot
+const snapshot = {};
+mn.forEach(r => { snapshot[r.team] = r.mnRank; });
+writeFileSync(prevPath, JSON.stringify(snapshot, null, 2));
+console.log('Saved prev-rankings.json snapshot.');
