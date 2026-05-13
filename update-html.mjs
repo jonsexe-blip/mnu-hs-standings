@@ -33,6 +33,26 @@ const newBlock =
   `// 4 out-of-state WI teams included in KRACH calculation for SOS accuracy but excluded from MN display\n` +
   `const RRI_MAP = {\n${lines.join(',\n')},\n};`;
 
+// Compute new games since last run
+const prevGamesPath = './prev-games.json';
+const prevGameKeys = existsSync(prevGamesPath)
+  ? new Set(JSON.parse(readFileSync(prevGamesPath, 'utf8')))
+  : null;
+
+function gameKey(g) {
+  const [t1, s1, t2, s2] = g.team1 < g.team2
+    ? [g.team1, g.score1, g.team2, g.score2]
+    : [g.team2, g.score2, g.team1, g.score1];
+  return `${t1}|${s1}|${t2}|${s2}`;
+}
+
+const newGames = prevGameKeys
+  ? games.filter(g => !prevGameKeys.has(gameKey(g)))
+  : [];
+
+// Build NEW_GAMES JS literal
+const newGamesBlock = `// Games added in the most recent auto-update run (populated by update-html.mjs)\nconst NEW_GAMES = ${JSON.stringify(newGames)};`;
+
 let html = readFileSync('./index.html', 'utf8');
 const original = html;
 
@@ -40,6 +60,12 @@ const original = html;
 html = html.replace(
   /\/\/ Computed RRI scores from Bradley-Terry MLE on \d+ games[\s\S]*?\nconst RRI_MAP = \{[\s\S]*?\n\};/,
   newBlock
+);
+
+// Replace NEW_GAMES block
+html = html.replace(
+  /\/\/ Games added in the most recent auto-update run[\s\S]*?\nconst NEW_GAMES = \[.*?\];/,
+  newGamesBlock
 );
 
 // Replace game count in key places
@@ -53,7 +79,7 @@ if (html === original) {
   console.log('No changes — index.html is already up to date.');
 } else {
   writeFileSync('./index.html', html);
-  console.log(`Updated index.html (${count} games, ${mn.length} MN teams).`);
+  console.log(`Updated index.html (${count} games, ${mn.length} MN teams, ${newGames.length} new games).`);
 }
 
 // Save current ranks as next run's snapshot
@@ -61,3 +87,8 @@ const snapshot = {};
 mn.forEach(r => { snapshot[r.team] = r.mnRank; });
 writeFileSync(prevPath, JSON.stringify(snapshot, null, 2));
 console.log('Saved prev-rankings.json snapshot.');
+
+// Save current game keys as next run's snapshot
+const currentKeys = games.map(gameKey);
+writeFileSync(prevGamesPath, JSON.stringify(currentKeys, null, 2));
+console.log('Saved prev-games.json snapshot.');

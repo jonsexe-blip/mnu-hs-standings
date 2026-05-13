@@ -146,6 +146,23 @@ tbody tr.jv-row.jv-hidden{display:none;}
 .exp .callout{margin-top:10px;}
 
 footer{text-align:center;padding:18px;color:var(--dm);font-size:12px;border-top:1px solid var(--bd);margin-top:28px;}
+
+/* TWO-COLUMN TABLE LAYOUT */
+.table-layout{display:flex;gap:16px;align-items:flex-start;}
+.games-panel{width:25%;flex-shrink:0;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;}
+.table-panel{flex:1;min-width:0;}
+.gpanel-box{background:var(--s1);border:1px solid var(--bd);border-radius:8px;overflow:hidden;}
+.gpanel-hdr{padding:10px 13px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mx);border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;}
+.gpanel-hdr span{color:var(--ac);}
+.gpanel-date{font-size:11px;font-weight:400;color:var(--dm);text-transform:none;letter-spacing:0;}
+.gpanel-empty{padding:16px 13px;color:var(--dm);font-size:13px;font-style:italic;}
+.game-row{padding:7px 13px;border-bottom:1px solid var(--bd);font-size:12px;line-height:1.5;}
+.game-row:last-child{border-bottom:none;}
+.game-team{display:flex;justify-content:space-between;gap:4px;}
+.game-team.winner{font-weight:700;color:var(--tx);}
+.game-team.loser{color:var(--mx);}
+.game-score{flex-shrink:0;font-variant-numeric:tabular-nums;}
+@media(max-width:800px){.table-layout{flex-direction:column;}.games-panel{width:100%;position:static;max-height:none;}}
 </style>
 </head>
 <body>
@@ -173,6 +190,11 @@ footer{text-align:center;padding:18px;color:var(--dm);font-size:12px;border-top:
 <main>
 <!-- TABLE TAB -->
 <div class="tab-pane active" id="tab-table">
+  <div class="table-layout">
+  <div class="games-panel">
+    <div class="gpanel-box" id="gamesPanel"></div>
+  </div>
+  <div class="table-panel">
   <div class="ctrl">
     <input type="text" id="srch" placeholder="Search teams…">
     <select id="cflt">
@@ -229,6 +251,8 @@ footer{text-align:center;padding:18px;color:var(--dm);font-size:12px;border-top:
       <strong>Biggest computed vs official discrepancies:</strong> St Paul Academy (MNU #19, computed #29, −10), Prior Lake (MNU #33, computed #23, +10), Wayzata (MNU #40, computed #31, +9), St Louis Park JV (MNU #21, computed #28, −7), Andover JV (MNU #25, computed #32, −7). These gaps likely reflect missing Hopkins Hustle pool play and possible committee adjustments beyond pure KRACH.
     </div>
   </div>
+  </div><!-- .table-panel -->
+  </div><!-- .table-layout -->
 </div>
 
 <!-- SPECTRUM TAB -->
@@ -295,65 +319,68 @@ const CC = {"Lake":"#388bfd","Twin Cities":"#a371f7","North Suburban":"#3fb950",
 // Computed RRI scores from Bradley-Terry MLE on 333 games (league + Matoska Classic, Spring Jamboree, Hopkins Hustle)
 // 4 out-of-state WI teams included in KRACH calculation for SOS accuracy but excluded from MN display
 const RRI_MAP = {
-  "Edina":{rri:2.771,krach:15.981,calcRank:1,gp:17,chg:null},
-  "Minneapolis Washburn":{rri:2.407,krach:11.096,calcRank:2,gp:17,chg:null},
-  "Andover":{rri:2.320,krach:10.175,calcRank:3,gp:16,chg:null},
-  "Minneapolis South":{rri:2.219,krach:9.196,calcRank:4,gp:21,chg:null},
-  "Great River School":{rri:2.083,krach:8.025,calcRank:5,gp:16,chg:null},
-  "St Paul Central":{rri:2.037,krach:7.669,calcRank:6,gp:21,chg:null},
-  "St Louis Park":{rri:1.794,krach:6.015,calcRank:7,gp:17,chg:null},
-  "Mounds View":{rri:1.764,krach:5.838,calcRank:8,gp:17,chg:null},
-  "Apple Valley":{rri:1.582,krach:4.866,calcRank:9,gp:15,chg:null},
-  "White Bear Lake":{rri:1.494,krach:4.453,calcRank:10,gp:14,chg:null},
-  "Open World Learning Community":{rri:1.387,krach:4.002,calcRank:11,gp:16,chg:null},
-  "Woodbury":{rri:1.376,krach:3.957,calcRank:12,gp:9,chg:null},
-  "Hopkins":{rri:1.350,krach:3.859,calcRank:13,gp:11,chg:null},
-  "Minnetonka":{rri:1.136,krach:3.115,calcRank:14,gp:13,chg:null},
-  "Maple Grove":{rri:1.077,krach:2.935,calcRank:15,gp:14,chg:null},
-  "Eagan":{rri:0.780,krach:2.182,calcRank:16,gp:10,chg:null},
-  "Cathedral":{rri:0.677,krach:1.968,calcRank:17,gp:6,chg:null},
-  "Benilde-St Margaret's":{rri:0.581,krach:1.788,calcRank:18,gp:6,chg:null},
-  "Blake":{rri:0.331,krach:1.392,calcRank:19,gp:6,chg:null},
-  "Lakeville North":{rri:0.086,krach:1.090,calcRank:20,gp:13,chg:null},
-  "East Ridge":{rri:0.063,krach:1.065,calcRank:21,gp:12,chg:null},
-  "Edina JV1":{rri:0.024,krach:1.024,calcRank:22,gp:14,chg:null},
-  "Prior Lake":{rri:-0.008,krach:0.992,calcRank:23,gp:13,chg:null},
-  "Edina JV2":{rri:-0.022,krach:0.978,calcRank:24,gp:8,chg:null},
-  "Lakeville South":{rri:-0.103,krach:0.902,calcRank:25,gp:13,chg:null},
-  "Roseville":{rri:-0.170,krach:0.844,calcRank:26,gp:13,chg:null},
-  "Great River School JV":{rri:-0.176,krach:0.838,calcRank:27,gp:12,chg:null},
-  "St Louis Park JV":{rri:-0.197,krach:0.821,calcRank:28,gp:14,chg:null},
-  "St Paul Academy":{rri:-0.198,krach:0.820,calcRank:29,gp:8,chg:null},
-  "Rosemount":{rri:-0.295,krach:0.744,calcRank:30,gp:13,chg:null},
-  "Wayzata":{rri:-0.356,krach:0.700,calcRank:31,gp:8,chg:null},
-  "Andover JV":{rri:-0.370,krach:0.691,calcRank:32,gp:13,chg:null},
-  "Minneapolis South JV":{rri:-0.395,krach:0.674,calcRank:33,gp:14,chg:null},
-  "White Bear Lake JV":{rri:-0.473,krach:0.623,calcRank:34,gp:13,chg:null},
-  "St Thomas Academy":{rri:-0.533,krach:0.587,calcRank:35,gp:7,chg:null},
-  "Mounds View JV":{rri:-0.568,krach:0.567,calcRank:36,gp:13,chg:null},
-  "Minneapolis Washburn JV":{rri:-0.585,krach:0.557,calcRank:37,gp:12,chg:null},
-  "Eden Prairie":{rri:-0.746,krach:0.474,calcRank:38,gp:7,chg:null},
-  "Hopkins JV":{rri:-0.817,krach:0.442,calcRank:39,gp:5,chg:null},
-  "Irondale":{rri:-0.846,krach:0.429,calcRank:40,gp:12,chg:null},
-  "Cretin-Derham Hall":{rri:-0.941,krach:0.390,calcRank:41,gp:15,chg:null},
-  "Red Wing":{rri:-1.026,krach:0.358,calcRank:42,gp:12,chg:null},
-  "Minneapolis Southwest":{rri:-1.043,krach:0.352,calcRank:43,gp:12,chg:null},
-  "Stillwater Area":{rri:-1.055,krach:0.348,calcRank:44,gp:13,chg:null},
-  "St Paul Central JV":{rri:-1.125,krach:0.325,calcRank:45,gp:11,chg:null},
-  "Robbinsdale Cooper":{rri:-1.240,krach:0.289,calcRank:46,gp:6,chg:null},
-  "Open World Learning Community JV":{rri:-1.287,krach:0.276,calcRank:47,gp:12,chg:null},
-  "Apple Valley JV":{rri:-1.373,krach:0.253,calcRank:48,gp:7,chg:null},
-  "Avalon":{rri:-1.475,krach:0.229,calcRank:49,gp:7,chg:null},
-  "Eagan JV":{rri:-1.511,krach:0.221,calcRank:50,gp:5,chg:null},
-  "Bloomington":{rri:-1.557,krach:0.211,calcRank:51,gp:7,chg:null},
-  "Minnetonka JV":{rri:-1.613,krach:0.199,calcRank:52,gp:6,chg:null},
-  "Richfield":{rri:-1.679,krach:0.187,calcRank:53,gp:7,chg:null},
-  "Hastings":{rri:-1.929,krach:0.145,calcRank:54,gp:5,chg:null},
-  "Mounds View JV2":{rri:-1.998,krach:0.136,calcRank:55,gp:12,chg:null},
-  "East Ridge JV":{rri:-2.604,krach:0.074,calcRank:56,gp:5,chg:null},
-  "Prior Lake JV":{rri:-2.652,krach:0.070,calcRank:57,gp:8,chg:null},
-  "Providence Academy":{rri:-2.945,krach:0.053,calcRank:58,gp:4,chg:null},
+  "Edina":{rri:2.771,krach:15.981,calcRank:1,gp:17,chg:0},
+  "Minneapolis Washburn":{rri:2.407,krach:11.096,calcRank:2,gp:17,chg:0},
+  "Andover":{rri:2.320,krach:10.175,calcRank:3,gp:16,chg:0},
+  "Minneapolis South":{rri:2.219,krach:9.196,calcRank:4,gp:21,chg:0},
+  "Great River School":{rri:2.083,krach:8.025,calcRank:5,gp:16,chg:0},
+  "St Paul Central":{rri:2.037,krach:7.669,calcRank:6,gp:21,chg:0},
+  "St Louis Park":{rri:1.794,krach:6.015,calcRank:7,gp:17,chg:0},
+  "Mounds View":{rri:1.764,krach:5.838,calcRank:8,gp:17,chg:0},
+  "Apple Valley":{rri:1.582,krach:4.866,calcRank:9,gp:15,chg:0},
+  "White Bear Lake":{rri:1.494,krach:4.453,calcRank:10,gp:14,chg:0},
+  "Open World Learning Community":{rri:1.387,krach:4.002,calcRank:11,gp:16,chg:0},
+  "Woodbury":{rri:1.376,krach:3.957,calcRank:12,gp:9,chg:0},
+  "Hopkins":{rri:1.350,krach:3.859,calcRank:13,gp:11,chg:0},
+  "Minnetonka":{rri:1.136,krach:3.115,calcRank:14,gp:13,chg:0},
+  "Maple Grove":{rri:1.077,krach:2.935,calcRank:15,gp:14,chg:0},
+  "Eagan":{rri:0.780,krach:2.182,calcRank:16,gp:10,chg:0},
+  "Cathedral":{rri:0.677,krach:1.968,calcRank:17,gp:6,chg:0},
+  "Benilde-St Margaret's":{rri:0.581,krach:1.788,calcRank:18,gp:6,chg:0},
+  "Blake":{rri:0.331,krach:1.392,calcRank:19,gp:6,chg:0},
+  "Lakeville North":{rri:0.086,krach:1.090,calcRank:20,gp:13,chg:0},
+  "East Ridge":{rri:0.063,krach:1.065,calcRank:21,gp:12,chg:0},
+  "Edina JV1":{rri:0.024,krach:1.024,calcRank:22,gp:14,chg:0},
+  "Prior Lake":{rri:-0.008,krach:0.992,calcRank:23,gp:13,chg:0},
+  "Edina JV2":{rri:-0.022,krach:0.978,calcRank:24,gp:8,chg:0},
+  "Lakeville South":{rri:-0.103,krach:0.902,calcRank:25,gp:13,chg:0},
+  "Roseville":{rri:-0.170,krach:0.844,calcRank:26,gp:13,chg:0},
+  "Great River School JV":{rri:-0.176,krach:0.838,calcRank:27,gp:12,chg:0},
+  "St Louis Park JV":{rri:-0.197,krach:0.821,calcRank:28,gp:14,chg:0},
+  "St Paul Academy":{rri:-0.198,krach:0.820,calcRank:29,gp:8,chg:0},
+  "Rosemount":{rri:-0.295,krach:0.744,calcRank:30,gp:13,chg:0},
+  "Wayzata":{rri:-0.356,krach:0.700,calcRank:31,gp:8,chg:0},
+  "Andover JV":{rri:-0.370,krach:0.691,calcRank:32,gp:13,chg:0},
+  "Minneapolis South JV":{rri:-0.395,krach:0.674,calcRank:33,gp:14,chg:0},
+  "White Bear Lake JV":{rri:-0.473,krach:0.623,calcRank:34,gp:13,chg:0},
+  "St Thomas Academy":{rri:-0.533,krach:0.587,calcRank:35,gp:7,chg:0},
+  "Mounds View JV":{rri:-0.568,krach:0.567,calcRank:36,gp:13,chg:0},
+  "Minneapolis Washburn JV":{rri:-0.585,krach:0.557,calcRank:37,gp:12,chg:0},
+  "Eden Prairie":{rri:-0.746,krach:0.474,calcRank:38,gp:7,chg:0},
+  "Hopkins JV":{rri:-0.817,krach:0.442,calcRank:39,gp:5,chg:0},
+  "Irondale":{rri:-0.846,krach:0.429,calcRank:40,gp:12,chg:0},
+  "Cretin-Derham Hall":{rri:-0.941,krach:0.390,calcRank:41,gp:15,chg:0},
+  "Red Wing":{rri:-1.026,krach:0.358,calcRank:42,gp:12,chg:0},
+  "Minneapolis Southwest":{rri:-1.043,krach:0.352,calcRank:43,gp:12,chg:0},
+  "Stillwater Area":{rri:-1.055,krach:0.348,calcRank:44,gp:13,chg:0},
+  "St Paul Central JV":{rri:-1.125,krach:0.325,calcRank:45,gp:11,chg:0},
+  "Robbinsdale Cooper":{rri:-1.240,krach:0.289,calcRank:46,gp:6,chg:0},
+  "Open World Learning Community JV":{rri:-1.287,krach:0.276,calcRank:47,gp:12,chg:0},
+  "Apple Valley JV":{rri:-1.373,krach:0.253,calcRank:48,gp:7,chg:0},
+  "Avalon":{rri:-1.475,krach:0.229,calcRank:49,gp:7,chg:0},
+  "Eagan JV":{rri:-1.511,krach:0.221,calcRank:50,gp:5,chg:0},
+  "Bloomington":{rri:-1.557,krach:0.211,calcRank:51,gp:7,chg:0},
+  "Minnetonka JV":{rri:-1.613,krach:0.199,calcRank:52,gp:6,chg:0},
+  "Richfield":{rri:-1.679,krach:0.187,calcRank:53,gp:7,chg:0},
+  "Hastings":{rri:-1.929,krach:0.145,calcRank:54,gp:5,chg:0},
+  "Mounds View JV2":{rri:-1.998,krach:0.136,calcRank:55,gp:12,chg:0},
+  "East Ridge JV":{rri:-2.604,krach:0.074,calcRank:56,gp:5,chg:0},
+  "Prior Lake JV":{rri:-2.652,krach:0.070,calcRank:57,gp:8,chg:0},
+  "Providence Academy":{rri:-2.945,krach:0.053,calcRank:58,gp:4,chg:0},
 };
+
+// Games added in the most recent auto-update run (populated by update-html.mjs)
+const NEW_GAMES = [];
 
 const MNU = [
   {rank:1, conf:"Lake",             team:"Edina",                             wins:12,losses:1},
@@ -510,6 +537,24 @@ document.getElementById('jvTgl').addEventListener('click',function(){
 });
 buildTable();
 
+// ── GAMES PANEL ───────────────────────────────────────────────────────────────
+(function renderGamesPanel(){
+  const box = document.getElementById('gamesPanel');
+  if(!box) return;
+  const today = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  if(!NEW_GAMES.length){
+    box.innerHTML = `<div class="gpanel-hdr">Today's Games <span class="gpanel-date">${today}</span></div><div class="gpanel-empty">No games played since last update</div>`;
+    return;
+  }
+  const rows = NEW_GAMES.map(g=>{
+    const t1win = g.score1 > g.score2;
+    return `<div class="game-row">
+      <div class="game-team ${t1win?'winner':'loser'}"><span>${g.team1}</span><span class="game-score">${g.score1}</span></div>
+      <div class="game-team ${t1win?'loser':'winner'}"><span>${g.team2}</span><span class="game-score">${g.score2}</span></div>
+    </div>`;
+  }).join('');
+  box.innerHTML = `<div class="gpanel-hdr">New Games <span class="gpanel-date">${today}</span></div>${rows}`;
+})();
 
 // ── CONFERENCE VIEW ───────────────────────────────────────────────────────────
 document.getElementById('cgrid').innerHTML=confs.map(c=>{
