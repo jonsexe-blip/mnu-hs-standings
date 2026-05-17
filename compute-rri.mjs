@@ -80,18 +80,25 @@ function norm(name) { return NAME_MAP[name] || name; }
 
 // ── Load & normalize games ─────────────────────────────────────────────────────
 const raw = JSON.parse(readFileSync('./games.json', 'utf8'));
-const games = raw.map(g => ({
-  team1: norm(g.team1), score1: g.score1,
-  team2: norm(g.team2), score2: g.score2,
-}));
+const known = new Set(Object.values(NAME_MAP));
 
-// Find any unmapped names
+// Filter out games involving unmapped teams (girls, FMP, etc.) rather than crashing
+const skipped = new Set();
+const games = raw
+  .map(g => ({ team1: norm(g.team1), score1: g.score1, team2: norm(g.team2), score2: g.score2 }))
+  .filter(g => {
+    const ok = known.has(g.team1) && known.has(g.team2);
+    if (!ok) { skipped.add(g.team1); skipped.add(g.team2); }
+    return ok;
+  });
+
+if (skipped.size) {
+  const unknown = [...skipped].filter(n => !known.has(n));
+  if (unknown.length) console.log('Skipped games with unmapped teams:', unknown);
+}
+
 const allNames = new Set();
 games.forEach(g => { allNames.add(g.team1); allNames.add(g.team2); });
-const known = new Set(Object.values(NAME_MAP));
-const unmapped = [...allNames].filter(n => !known.has(n));
-if (unmapped.length) { console.log('UNMAPPED teams:', unmapped); process.exit(1); }
-
 const TEAMS = [...allNames].sort();
 console.log(`Teams: ${TEAMS.length}, Games: ${games.length}`);
 
