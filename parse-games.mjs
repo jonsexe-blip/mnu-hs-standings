@@ -9,7 +9,7 @@ function parseGamesFromHtml(html) {
   for (const block of blocks) {
     const teamMatches = [...block.matchAll(/btn-label">([^<]+)<\/span>/g)].slice(0, 2);
     if (teamMatches.length < 2) continue;
-    const scoreMatches = [...block.matchAll(/<div class="score text-strong[^"]*">\s*(\d+)\s*<\/div>/g)].slice(0, 2);
+    const scoreMatches = [...block.matchAll(/<div class="[^"]*\bscore\b[^"]*\btext-strong\b[^"]*">\s*(\d+)\s*<\/div>/g)].slice(0, 2);
     if (scoreMatches.length < 2) continue;
     games.push({
       team1: teamMatches[0][1].trim(),
@@ -86,6 +86,8 @@ const nameMap = {
   'Minneapolis Ultimate Southwest': 'Minneapolis Southwest',
   'Red Wing': 'Red Wing',
   'Saint Paul Central Open JV': 'St Paul Central JV',
+  'St. Paul Central Revolution - Open Varsity': 'St Paul Central',
+  'St. Paul Central Revolution - Open JV': 'St Paul Central JV',
   'Stillwater Area Open': 'Stillwater Area',
   'Cretin-Derham Hall (Open)': 'Cretin-Derham Hall',
   'Robbinsdale Cooper Open': 'Robbinsdale Cooper',
@@ -109,12 +111,15 @@ function normName(n) {
   return nameMap[n] || n;
 }
 
-const normalized = allGames.map(g => ({
-  team1: normName(g.team1),
-  score1: g.score1,
-  team2: normName(g.team2),
-  score2: g.score2,
-}));
+const EXCLUDE_KW = ['girls', 'female', 'women', 'fmp', 'gnb', 'nonbinary'];
+function isOpenGame(g) {
+  const both = (g.team1 + ' ' + g.team2).toLowerCase();
+  return !EXCLUDE_KW.some(kw => both.includes(kw));
+}
+
+const normalized = allGames
+  .map(g => ({ team1: normName(g.team1), score1: g.score1, team2: normName(g.team2), score2: g.score2 }))
+  .filter(isOpenGame);
 
 // Show unique team names for verification
 const teamNames = new Set();

@@ -50,8 +50,12 @@ const newGames = prevGameKeys
   ? games.filter(g => !prevGameKeys.has(gameKey(g)))
   : [];
 
-// Build NEW_GAMES JS literal
-const newGamesBlock = `// Games added in the most recent auto-update run (populated by update-html.mjs)\nconst NEW_GAMES = ${JSON.stringify(newGames)};`;
+// Build NEW_GAMES JS literal (with run date for staleness check)
+const runDate = new Date().toISOString().slice(0, 10);
+const newGamesBlock =
+  `// Games added in the most recent auto-update run (populated by update-html.mjs)\n` +
+  `const LAST_RUN = "${runDate}";\n` +
+  `const NEW_GAMES = ${JSON.stringify(newGames)};`;
 
 let html = readFileSync('./index.html', 'utf8');
 const original = html;

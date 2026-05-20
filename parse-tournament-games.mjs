@@ -47,6 +47,7 @@ const TOURNAMENT_URLS = [
   { label: 'Spring Jamboree',    url: 'https://edinaultimate.org/e/jamboree26/schedule/division/Open/stage/163191' },
   // Hopkins Hustle D1: only bracket (no pool play), no D2/D3 available
   { label: 'Hopkins Hustle D1',  url: 'https://mnyu.ultimatecentral.com/e/2026-hopkins-hustle/schedule' },
+  { label: 'Goeke Memorial',     url: 'https://applevalleyultimate.org/e/2026-goeke-memorial/schedule/game_type/with_result' },
 ];
 
 const allTournamentGames = [];
@@ -152,6 +153,15 @@ if (unmapped.size > 0) {
   console.log('\nAll team names mapped successfully.');
 }
 
+// Filter out girls/FMP/women's games before merging
+const EXCLUDE_KW = ['girls', 'female', 'women', 'fmp', 'gnb', 'nonbinary'];
+function isOpenGame(g) {
+  const both = (g.team1 + ' ' + g.team2).toLowerCase();
+  return !EXCLUDE_KW.some(kw => both.includes(kw));
+}
+const openNormalized = normalized.filter(isOpenGame);
+console.log(`After excluding non-open games: ${openNormalized.length}`);
+
 // Load existing games and merge (deduplicate by team+score signature)
 const existing = JSON.parse(readFileSync('./games.json', 'utf8'));
 console.log(`\nExisting games: ${existing.length}`);
@@ -164,7 +174,7 @@ function gameKey(g) {
   return `${t1}|${s1}|${t2}|${s2}`;
 }
 const existingKeys = new Set(existing.map(gameKey));
-const newGames = normalized.filter(g => !existingKeys.has(gameKey(g)));
+const newGames = openNormalized.filter(g => !existingKeys.has(gameKey(g)));
 console.log(`Tournament games (deduped, new only): ${newGames.length}`);
 
 const merged = [...existing, ...newGames];
