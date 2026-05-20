@@ -26,7 +26,7 @@ function rankChange(team, newRank) {
 const lines = mn.map(r => {
   const chg = rankChange(r.team, r.mnRank);
   const chgStr = chg === null ? 'null' : chg;
-  return `  ${JSON.stringify(r.team)}:{rri:${r.rri.toFixed(3)},krach:${r.krach.toFixed(3)},calcRank:${r.mnRank},gp:${r.gamesPlayed},chg:${chgStr}}`;
+  return `  ${JSON.stringify(r.team)}:{rri:${r.rri.toFixed(5)},krach:${r.krach.toFixed(5)},calcRank:${r.mnRank},gp:${r.gamesPlayed},chg:${chgStr}}`;
 });
 const newBlock =
   `// Computed RRI scores from Bradley-Terry MLE on ${count} games (league + Matoska Classic, Spring Jamboree, Hopkins Hustle)\n` +
