@@ -163,8 +163,11 @@ const openNormalized = normalized.filter(isOpenGame);
 console.log(`After excluding non-open games: ${openNormalized.length}`);
 
 // Load existing games and merge (deduplicate by team+score signature)
-const existing = JSON.parse(readFileSync('./games.json', 'utf8'));
-console.log(`\nExisting games: ${existing.length}`);
+const raw = JSON.parse(readFileSync('./games.json', 'utf8'));
+console.log(`\nExisting games: ${raw.length}`);
+
+// Re-normalize league games through the same NAME_MAP so dedup keys match
+const existing = raw.map(g => ({ ...g, team1: norm(g.team1), team2: norm(g.team2) }));
 
 // Dedup key: sorted team pair + scores
 function gameKey(g) {
@@ -173,11 +176,19 @@ function gameKey(g) {
     : [g.team2, g.score2, g.team1, g.score1];
   return `${t1}|${s1}|${t2}|${s2}`;
 }
-const existingKeys = new Set(existing.map(gameKey));
+// Deduplicate existing after normalization (catches dupes from prior runs)
+const existingSeen = new Set();
+const dedupedExisting = existing.filter(g => {
+  const k = gameKey(g); if (existingSeen.has(k)) return false; existingSeen.add(k); return true;
+});
+if (dedupedExisting.length < existing.length)
+  console.log(`  Removed ${existing.length - dedupedExisting.length} duplicate(s) from existing games`);
+
+const existingKeys = new Set(dedupedExisting.map(gameKey));
 const newGames = openNormalized.filter(g => !existingKeys.has(gameKey(g)));
 console.log(`Tournament games (deduped, new only): ${newGames.length}`);
 
-const merged = [...existing, ...newGames];
+const merged = [...dedupedExisting, ...newGames];
 console.log(`Total merged: ${merged.length}`);
 
 writeFileSync('./games.json', JSON.stringify(merged, null, 2));
