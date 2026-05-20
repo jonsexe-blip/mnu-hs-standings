@@ -572,7 +572,7 @@ buildTable();
 
 // ── CONFERENCE VIEW ───────────────────────────────────────────────────────────
 document.getElementById('cgrid').innerHTML=confs.map(c=>{
-  const ct=TEAMS.filter(t=>t.conf===c);
+  const ct=TEAMS.filter(t=>t.conf===c).sort((a,b)=>b.rri-a.rri);
   return `<div class="ccard">
     <div class="chdr"><span class="lc" style="background:${CC[c]}"></span>${c}<span style="margin-left:auto;font-size:12px;font-weight:400;color:var(--mx)">${ct.length} teams</span></div>
     ${ct.map((t,i)=>`<div class="crow ${i<4?'po':''}">
