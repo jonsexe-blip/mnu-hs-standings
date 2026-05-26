@@ -10,6 +10,9 @@ on:
     # Saturday 7am–9pm CDT = Sat 12:00–Sun 02:00 UTC
     - cron: '0 12-23 * * 6'    # Sat 7am–6pm CDT
     - cron: '0 0-2 * * 0'      # Sat 7pm–9pm CDT
+    # Sunday 7am–9pm CDT = Sun 12:00–Mon 02:00 UTC
+    - cron: '0 12-23 * * 0'    # Sun 7am–6pm CDT
+    - cron: '0 0-2 * * 1'      # Sun 7pm–9pm CDT
 
 jobs:
   update:
