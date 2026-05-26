@@ -7,108 +7,96 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d1117;--surf:#161b22;--surf2:#21262d;
-  --border:#30363d;--text:#e6edf3;--muted:#8b949e;
-  --accent:#f0883e;--green:#3fb950;--red:#f85149;
-  --pool-a:#388bfd;--pool-b:#a371f7;--pool-c:#3fb950;--pool-d:#f0883e;
+  --bg:#f0f2f5;--surf:#fff;--surf2:#f6f8fa;
+  --border:#d0d7de;--text:#1f2328;--muted:#656d76;
+  --accent:#e05c1b;--navy:#1a2332;
+  --pool-a:#0969da;--pool-b:#8250df;--pool-c:#1a7f37;--pool-d:#e05c1b;
 }
 body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh}
-a{color:var(--accent);text-decoration:none}
-
-/* HEADER */
-.site-header{background:var(--surf);border-bottom:1px solid var(--border);padding:16px 20px}
+.site-header{background:var(--navy);padding:16px 20px}
 .site-header-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:14px}
 .site-logo{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0}
-.site-title{font-size:18px;font-weight:700;line-height:1.2}
-.site-subtitle{font-size:13px;color:var(--muted);margin-top:2px}
-.site-updated{font-size:12px;color:var(--muted);margin-top:3px}
-
-/* TABS */
-.tabs{background:var(--surf);border-bottom:1px solid var(--border);padding:0 20px;display:flex;gap:4px;overflow-x:auto}
-.tabs::-webkit-scrollbar{height:3px}
-.tab-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;font-weight:500;padding:12px 16px;position:relative;white-space:nowrap;transition:color .15s}
+.site-title{font-size:18px;font-weight:700;color:#fff;line-height:1.2}
+.site-subtitle{font-size:13px;color:rgba(255,255,255,.6);margin-top:2px}
+.site-updated{font-size:12px;color:rgba(255,255,255,.4);margin-top:3px}
+.tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 20px;display:flex;gap:2px;overflow-x:auto;position:sticky;top:0;z-index:10;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.tabs::-webkit-scrollbar{height:0}
+.tab-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;font-weight:500;padding:12px 14px;position:relative;white-space:nowrap;transition:color .15s}
 .tab-btn:hover{color:var(--text)}
 .tab-btn.active{color:var(--text)}
 .tab-btn.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent)}
-
-/* PANES */
 .tab-pane{display:none;max-width:900px;margin:0 auto;padding:20px}
 .tab-pane.active{display:block}
-
-/* POOL GRID */
-.pool-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:600px){.pool-grid{grid-template-columns:1fr}}
-.pool-card{background:var(--surf);border:1px solid var(--border);border-radius:8px;overflow:hidden}
-.pool-card-header{padding:10px 16px;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:8px;border-bottom:2px solid}
-.pool-a .pool-card-header{border-color:var(--pool-a)}
-.pool-b .pool-card-header{border-color:var(--pool-b)}
-.pool-c .pool-card-header{border-color:var(--pool-c)}
-.pool-d .pool-card-header{border-color:var(--pool-d)}
-.pool-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.pool-a .pool-dot{background:var(--pool-a)}
-.pool-b .pool-dot{background:var(--pool-b)}
-.pool-c .pool-dot{background:var(--pool-c)}
-.pool-d .pool-dot{background:var(--pool-d)}
-.pool-col-hdr{display:grid;grid-template-columns:1fr 40px 40px 56px;padding:4px 16px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border)}
-.pool-col-hdr span{text-align:center}
-.pool-col-hdr span:first-child{text-align:left}
-.pool-row{display:grid;grid-template-columns:1fr 40px 40px 56px;padding:8px 16px;align-items:center;border-bottom:1px solid var(--border)}
+/* POOLS */
+.pool-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:580px){.pool-grid{grid-template-columns:1fr}}
+.pool-card{background:var(--surf);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.pool-card-header{padding:10px 16px;font-weight:700;font-size:12px;letter-spacing:.07em;text-transform:uppercase;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+.pool-a .pool-card-header{border-left:3px solid var(--pool-a)}
+.pool-b .pool-card-header{border-left:3px solid var(--pool-b)}
+.pool-c .pool-card-header{border-left:3px solid var(--pool-c)}
+.pool-d .pool-card-header{border-left:3px solid var(--pool-d)}
+.pool-col-hdr{display:grid;grid-template-columns:1fr 44px 44px 56px;padding:4px 16px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);background:var(--surf2)}
+.pool-col-hdr span{text-align:center}.pool-col-hdr span:first-child{text-align:left}
+.pool-row{display:grid;grid-template-columns:1fr 44px 44px 56px;padding:9px 16px;align-items:center;border-bottom:1px solid var(--border)}
 .pool-row:last-child{border-bottom:none}
-.pool-row.leader{background:rgba(255,255,255,.03)}
-.pool-team{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;min-width:0}
+.pool-row.leader{background:rgba(9,105,218,.04)}
+.pool-team{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500;min-width:0}
 .pool-team-name{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.pool-logo{width:28px;height:28px;border-radius:50%;object-fit:cover;background:var(--surf2);flex-shrink:0}
-.pool-logo-placeholder{width:28px;height:28px;border-radius:50%;background:var(--surf2);display:inline-block;flex-shrink:0}
-.pool-stat{text-align:center;font-size:13px;color:var(--muted)}
-.pool-stat.active{color:var(--text)}
-.pool-rank{font-size:12px;color:var(--muted);width:16px;text-align:right;flex-shrink:0}
-
-/* SCHEDULE / SCORES */
-.section-hdr{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:16px 0 8px;display:flex;align-items:center;gap:8px}
-.section-hdr:first-child{padding-top:0}
-.section-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block}
-.pool-a-dot{background:var(--pool-a)}
-.pool-b-dot{background:var(--pool-b)}
-.pool-c-dot{background:var(--pool-c)}
-.pool-d-dot{background:var(--pool-d)}
-.bracket-dot{background:var(--accent)}
-
-/* GAME CARD */
-.game-card{background:var(--surf);border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin-bottom:8px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
-.game-team{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;min-width:0}
-.game-team.right{flex-direction:row-reverse;text-align:right}
-.game-logo{width:32px;height:32px;border-radius:50%;object-fit:cover;background:var(--surf2);flex-shrink:0}
-.game-logo-placeholder{width:32px;height:32px;border-radius:50%;background:var(--surf2);display:inline-block;flex-shrink:0}
-.game-name{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.game-team.winner .game-name{color:var(--text);font-weight:700}
-.game-team.loser .game-name{color:var(--muted)}
-.game-score-box{text-align:center;min-width:72px;flex-shrink:0}
-.game-score{font-size:20px;font-weight:700;letter-spacing:1px;display:flex;justify-content:center;align-items:center;gap:2px}
-.game-score .s{min-width:22px;text-align:center}
-.game-score .sep{color:var(--muted);font-weight:300;padding:0 2px}
-.game-score.w1 .s1{color:var(--text)}
-.game-score.w1 .s2{color:var(--muted)}
-.game-score.w2 .s2{color:var(--text)}
-.game-score.w2 .s1{color:var(--muted)}
-.game-time-label{font-size:12px;color:var(--muted);margin-top:3px}
-.game-vs{font-size:13px;color:var(--muted);margin-bottom:2px}
-
+.pool-logo{width:26px;height:26px;border-radius:50%;object-fit:cover;background:var(--surf2);flex-shrink:0;border:1px solid var(--border)}
+.pool-logo-ph{width:26px;height:26px;border-radius:50%;background:var(--surf2);display:inline-block;flex-shrink:0;border:1px solid var(--border)}
+.pool-stat{text-align:center;font-size:13px;color:var(--muted)}.pool-stat.on{color:var(--text)}
+.pool-rank{font-size:11px;color:var(--muted);width:14px;text-align:right;flex-shrink:0}
+/* SECTION HEADER */
+.sec-hdr{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:16px 0 8px;display:flex;align-items:center;gap:8px}
+.sec-hdr:first-child{padding-top:0}
+.pip{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.pip-a{background:var(--pool-a)}.pip-b{background:var(--pool-b)}.pip-c{background:var(--pool-c)}.pip-d{background:var(--pool-d)}.pip-brkt{background:var(--accent)}
+/* GAME CARD — UFA vertical style */
+.game-card{background:var(--surf);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.gc-hdr{background:var(--surf2);padding:5px 14px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;border-bottom:1px solid var(--border)}
+.gc-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;gap:8px}
+.gc-row:not(:last-child){border-bottom:1px solid var(--border)}
+.gc-team{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:500;min-width:0;flex:1}
+.gc-name{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.gc-score{font-size:18px;font-weight:700;flex-shrink:0;min-width:28px;text-align:right}
+.gc-score.tbd{font-size:13px;font-weight:400;color:var(--muted)}
+.gc-row.won .gc-name{font-weight:700}
+.gc-row.lost .gc-name{color:var(--muted)}
+.gc-row.lost .gc-score{color:var(--muted)}
+.g-logo{width:30px;height:30px;border-radius:50%;object-fit:cover;background:var(--surf2);flex-shrink:0;border:1px solid var(--border)}
+.g-logo-ph{width:30px;height:30px;border-radius:50%;background:var(--surf2);display:inline-block;flex-shrink:0;border:1px solid var(--border)}
 /* EMPTY STATE */
-.empty-state{text-align:center;padding:48px 20px;color:var(--muted);font-size:14px}
-.empty-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:8px}
-
+.empty{text-align:center;padding:48px 20px;color:var(--muted);font-size:14px}
+.empty h3{font-size:18px;font-weight:600;color:var(--text);margin-bottom:8px}
 /* BRACKET */
-.bracket-note{color:var(--muted);font-size:13px;padding:0 0 16px;line-height:1.5}
-.bracket-card{background:var(--surf);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:8px}
-.bracket-row{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;gap:8px}
-.bracket-row:not(:last-child){border-bottom:1px solid var(--border)}
-.bracket-team{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500}
-.bracket-team.winner{color:var(--text);font-weight:700}
-.bracket-team.loser{color:var(--muted)}
-.bracket-team.tbd{color:var(--muted);font-style:italic}
-.bracket-score{font-size:16px;font-weight:700}
-.bracket-score.tbd{color:var(--muted)}
-.bracket-time{font-size:11px;color:var(--muted);padding:5px 14px;background:rgba(0,0,0,.2);text-align:right}
+.brkt-section{margin-bottom:32px}
+.brkt-title{font-size:15px;font-weight:700;margin-bottom:3px}
+.brkt-note{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+.brkt-scroll{overflow-x:auto;padding-bottom:4px}
+.brkt-tree{display:flex;height:380px}
+.brkt-round{position:relative;width:196px;flex-shrink:0}
+.brkt-conn{position:relative;width:40px;flex-shrink:0;height:380px}
+.brkt-matchup{position:absolute;left:0;right:0;background:var(--surf);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.bm-row{display:flex;align-items:center;gap:6px;padding:0 10px;height:37px;font-size:12px;font-weight:500}
+.bm-row:not(:last-child){border-bottom:1px solid var(--border)}
+.bm-row.tbd{color:var(--muted);font-style:italic}
+.bm-row.won{font-weight:700}
+.bm-row.lost{color:var(--muted)}
+.bm-seed{font-size:10px;color:var(--muted);font-style:normal;min-width:20px;flex-shrink:0;font-weight:700}
+.bm-name{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;flex:1}
+.bm-score{font-size:13px;font-weight:700;flex-shrink:0;min-width:18px;text-align:right}
+.bm-score.tbd{color:var(--muted);font-weight:400}
+.bm-logo{width:18px;height:18px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid var(--border)}
+.bm-logo-ph{width:18px;height:18px;border-radius:50%;background:var(--surf2);flex-shrink:0;border:1px solid var(--border);display:inline-block}
+.b-line{position:absolute;background:var(--border)}
+.b-h{height:2px}
+.b-v{width:2px}
+.brkt-placements{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.placement-card{background:var(--surf);border:1px solid var(--border);border-radius:6px;overflow:hidden;flex:0 0 auto;width:220px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.placement-card-hdr{background:var(--surf2);padding:5px 10px;font-size:11px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.05em}
+.placement-team{display:flex;align-items:center;gap:6px;padding:8px 10px;font-size:12px;font-style:italic;color:var(--muted)}
+.placement-team:not(:last-child){border-bottom:1px solid var(--border)}
 </style>
 </head>
 <body>
@@ -118,7 +106,7 @@ a{color:var(--accent);text-decoration:none}
     <img class="site-logo" src="https://d36m266ykvepgv.cloudfront.net/uploads/media/ThtwEQTY7P/c-93-100/mnubadgehighquality-2.png" alt="MNU">
     <div>
       <div class="site-title">2026 MN HS Open D1 State Championship</div>
-      <div class="site-subtitle">Friday &ndash; Saturday, May 29 &ndash; 30</div>
+      <div class="site-subtitle">May 29&ndash;31 &middot; Pool Play Fri&ndash;Sat &middot; Bracket Sunday</div>
       <div class="site-updated" id="updatedAt">Loading&hellip;</div>
     </div>
   </div>
@@ -131,190 +119,202 @@ a{color:var(--accent);text-decoration:none}
   <button class="tab-btn" data-tab="bracket">Bracket</button>
 </nav>
 
-<div class="tab-pane active" id="tab-pools">
-  <div class="pool-grid" id="poolGrid"></div>
-</div>
-<div class="tab-pane" id="tab-schedule">
-  <div id="scheduleContent"></div>
-</div>
-<div class="tab-pane" id="tab-scores">
-  <div id="scoresContent"></div>
-</div>
-<div class="tab-pane" id="tab-bracket">
-  <div id="bracketContent"></div>
-</div>
+<div class="tab-pane active" id="tab-pools"><div class="pool-grid" id="poolGrid"></div></div>
+<div class="tab-pane" id="tab-schedule"><div id="scheduleContent"></div></div>
+<div class="tab-pane" id="tab-scores"><div id="scoresContent"></div></div>
+<div class="tab-pane" id="tab-bracket"><div id="bracketContent"></div></div>
 
 <script>
 // STATE_DATA_START
 const STATE_DATA = {"updatedAt":"2026-05-26T21:15:50.858Z","pools":{"A":[{"team":"Edina","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NXid7TzikS/c-40-40/screen-shot-2019-11-27-at-12-21-51-pm.png","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"Mounds View","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/oAlUtO7JCo/c-40-40/blackgreenwhite-8.png","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"White Bear Lake","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/FCufp1WUfX/c-40-40/boys-400x400.jpg","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"Minnetonka","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/i7lZ2na9zJ/c-40-40/tonka.jpg","w":0,"l":0,"pf":0,"pa":0,"pd":0}],"B":[{"team":"Minneapolis Washburn","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"St Louis Park","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/unN2UCB9kF/c-40-40/slp-logo-1-copy.jpg","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"Apple Valley","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"Eagan","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg","w":0,"l":0,"pf":0,"pa":0,"pd":0}],"C":[{"team":"Andover","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/4DGmfnQ8wd/c-40-40/andovermn-boys-2024-300x179.png","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"St Paul Central","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/UuMJHzLr5N/c-40-40/revolution-logo-transparent-2.png","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"Woodbury","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/0Noa5hH65j/c-40-40/f5bee1a5feed44bfb94356b8518b84b9.jpg","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"Maple Grove","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/RYFAhJkJKD/c-40-40/image-6.jpg","w":0,"l":0,"pf":0,"pa":0,"pd":0}],"D":[{"team":"Minneapolis South","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/3HK81faKbr/c-40-40/south-squall-ultimate-7.jpg","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"Great River School","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NelRuwXz6E/c-40-40/stars-2016-backgroundandlogo.jpg","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"Open World Learning Community","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/gr9zYs83B0/c-40-40/owlmanateeimage.png","w":0,"l":0,"pf":0,"pa":0,"pd":0},{"team":"Hopkins","logo":"https://d36m266ykvepgv.cloudfront.net/uploads/media/WVXwsJu4Ot/c-40-40/hurt-logo-2.png","w":0,"l":0,"pf":0,"pa":0,"pd":0}]},"poolGames":[{"date":"Sat, 30 May 2026","time":"2:30 PM","team1":"Edina","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NXid7TzikS/c-40-40/screen-shot-2019-11-27-at-12-21-51-pm.png","score1":null,"team2":"White Bear Lake","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/FCufp1WUfX/c-40-40/boys-400x400.jpg","score2":null,"pool":"A","completed":false},{"date":"Sat, 30 May 2026","time":"2:30 PM","team1":"Mounds View","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/oAlUtO7JCo/c-40-40/blackgreenwhite-8.png","score1":null,"team2":"Minnetonka","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/i7lZ2na9zJ/c-40-40/tonka.jpg","score2":null,"pool":"A","completed":false},{"date":"Sat, 30 May 2026","time":"4:30 PM","team1":"Minnetonka","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/i7lZ2na9zJ/c-40-40/tonka.jpg","score1":null,"team2":"Edina","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NXid7TzikS/c-40-40/screen-shot-2019-11-27-at-12-21-51-pm.png","score2":null,"pool":"A","completed":false},{"date":"Sat, 30 May 2026","time":"4:30 PM","team1":"Mounds View","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/oAlUtO7JCo/c-40-40/blackgreenwhite-8.png","score1":null,"team2":"White Bear Lake","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/FCufp1WUfX/c-40-40/boys-400x400.jpg","score2":null,"pool":"A","completed":false},{"date":"Sat, 30 May 2026","time":"6:30 PM","team1":"Mounds View","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/oAlUtO7JCo/c-40-40/blackgreenwhite-8.png","score1":null,"team2":"Edina","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NXid7TzikS/c-40-40/screen-shot-2019-11-27-at-12-21-51-pm.png","score2":null,"pool":"A","completed":false},{"date":"Sat, 30 May 2026","time":"6:30 PM","team1":"White Bear Lake","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/FCufp1WUfX/c-40-40/boys-400x400.jpg","score1":null,"team2":"Minnetonka","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/i7lZ2na9zJ/c-40-40/tonka.jpg","score2":null,"pool":"A","completed":false},{"date":"Fri, 29 May 2026","time":"6:30 PM","team1":"Apple Valley","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png","score1":null,"team2":"Eagan","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg","score2":null,"pool":"B","completed":false},{"date":"Sat, 30 May 2026","time":"2:30 PM","team1":"St Louis Park","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/unN2UCB9kF/c-40-40/slp-logo-1-copy.jpg","score1":null,"team2":"Minneapolis Washburn","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg","score2":null,"pool":"B","completed":false},{"date":"Sat, 30 May 2026","time":"4:30 PM","team1":"Minneapolis Washburn","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg","score1":null,"team2":"Eagan","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg","score2":null,"pool":"B","completed":false},{"date":"Sat, 30 May 2026","time":"4:30 PM","team1":"Apple Valley","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png","score1":null,"team2":"St Louis Park","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/unN2UCB9kF/c-40-40/slp-logo-1-copy.jpg","score2":null,"pool":"B","completed":false},{"date":"Sat, 30 May 2026","time":"6:30 PM","team1":"Apple Valley","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png","score1":null,"team2":"Minneapolis Washburn","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg","score2":null,"pool":"B","completed":false},{"date":"Sat, 30 May 2026","time":"6:30 PM","team1":"Eagan","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg","score1":null,"team2":"St Louis Park","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/unN2UCB9kF/c-40-40/slp-logo-1-copy.jpg","score2":null,"pool":"B","completed":false},{"date":"Sat, 30 May 2026","time":"2:30 PM","team1":"Andover","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/4DGmfnQ8wd/c-40-40/andovermn-boys-2024-300x179.png","score1":null,"team2":"Woodbury","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/0Noa5hH65j/c-40-40-147-130-463-500/f5bee1a5feed44bfb94356b8518b84b9.jpg","score2":null,"pool":"C","completed":false},{"date":"Sat, 30 May 2026","time":"2:30 PM","team1":"Maple Grove","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/RYFAhJkJKD/c-40-40/image-6.jpg","score1":null,"team2":"St Paul Central","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/UuMJHzLr5N/c-40-40/revolution-logo-transparent-2.png","score2":null,"pool":"C","completed":false},{"date":"Sat, 30 May 2026","time":"4:30 PM","team1":"Maple Grove","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/RYFAhJkJKD/c-40-40/image-6.jpg","score1":null,"team2":"Andover","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/4DGmfnQ8wd/c-40-40/andovermn-boys-2024-300x179.png","score2":null,"pool":"C","completed":false},{"date":"Sat, 30 May 2026","time":"4:30 PM","team1":"Woodbury","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/0Noa5hH65j/c-40-40-147-130-463-500/f5bee1a5feed44bfb94356b8518b84b9.jpg","score1":null,"team2":"St Paul Central","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/UuMJHzLr5N/c-40-40/revolution-logo-transparent-2.png","score2":null,"pool":"C","completed":false},{"date":"Sat, 30 May 2026","time":"6:30 PM","team1":"St Paul Central","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/UuMJHzLr5N/c-40-40/revolution-logo-transparent-2.png","score1":null,"team2":"Andover","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/4DGmfnQ8wd/c-40-40/andovermn-boys-2024-300x179.png","score2":null,"pool":"C","completed":false},{"date":"Sat, 30 May 2026","time":"6:30 PM","team1":"Maple Grove","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/RYFAhJkJKD/c-40-40/image-6.jpg","score1":null,"team2":"Woodbury","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/0Noa5hH65j/c-40-40-147-130-463-500/f5bee1a5feed44bfb94356b8518b84b9.jpg","score2":null,"pool":"C","completed":false},{"date":"Sat, 30 May 2026","time":"2:30 PM","team1":"Open World Learning Community","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/gr9zYs83B0/c-40-40/owlmanateeimage.png","score1":null,"team2":"Minneapolis South","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/3HK81faKbr/c-40-40/south-squall-ultimate-7.jpg","score2":null,"pool":"D","completed":false},{"date":"Sat, 30 May 2026","time":"2:30 PM","team1":"Great River School","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NelRuwXz6E/c-40-40/stars-2016-backgroundandlogo.jpg","score1":null,"team2":"Hopkins","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/WVXwsJu4Ot/c-40-40/hurt-logo-2.png","score2":null,"pool":"D","completed":false},{"date":"Sat, 30 May 2026","time":"4:30 PM","team1":"Great River School","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NelRuwXz6E/c-40-40/stars-2016-backgroundandlogo.jpg","score1":null,"team2":"Open World Learning Community","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/gr9zYs83B0/c-40-40/owlmanateeimage.png","score2":null,"pool":"D","completed":false},{"date":"Sat, 30 May 2026","time":"4:30 PM","team1":"Minneapolis South","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/3HK81faKbr/c-40-40/south-squall-ultimate-7.jpg","score1":null,"team2":"Hopkins","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/WVXwsJu4Ot/c-40-40/hurt-logo-2.png","score2":null,"pool":"D","completed":false},{"date":"Sat, 30 May 2026","time":"6:30 PM","team1":"Hopkins","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/WVXwsJu4Ot/c-40-40/hurt-logo-2.png","score1":null,"team2":"Open World Learning Community","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/gr9zYs83B0/c-40-40/owlmanateeimage.png","score2":null,"pool":"D","completed":false},{"date":"Sat, 30 May 2026","time":"6:30 PM","team1":"Great River School","logo1":"https://d36m266ykvepgv.cloudfront.net/uploads/media/NelRuwXz6E/c-40-40/stars-2016-backgroundandlogo.jpg","score1":null,"team2":"Minneapolis South","logo2":"https://d36m266ykvepgv.cloudfront.net/uploads/media/3HK81faKbr/c-40-40/south-squall-ultimate-7.jpg","score2":null,"pool":"D","completed":false}],"bracketGames":[]};
 // STATE_DATA_END
 
-// Tab switching
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+    document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
     btn.classList.add('active');
-    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
   });
 });
 
-// Updated timestamp
-(function() {
-  const dt = new Date(STATE_DATA.updatedAt);
-  const diff = Math.floor((Date.now() - dt) / 60000);
-  let label;
-  if (diff < 2) label = 'just now';
-  else if (diff < 60) label = diff + ' minutes ago';
-  else if (diff < 120) label = '1 hour ago';
-  else if (diff < 1440) label = Math.floor(diff/60) + ' hours ago';
-  else label = Math.floor(diff/1440) + ' days ago';
-  document.getElementById('updatedAt').textContent = 'Updated ' + label;
+(function(){
+  var dt=new Date(STATE_DATA.updatedAt),diff=Math.floor((Date.now()-dt)/60000),label;
+  if(diff<2)label='just now';
+  else if(diff<60)label=diff+' min ago';
+  else if(diff<120)label='1 hour ago';
+  else if(diff<1440)label=Math.floor(diff/60)+' hours ago';
+  else label=Math.floor(diff/1440)+' days ago';
+  document.getElementById('updatedAt').textContent='Updated '+label;
 })();
 
-// Logo img helper
-function logoImg(src, name, cls) {
-  var phCls = cls === 'game-logo' ? 'game-logo-placeholder' : 'pool-logo-placeholder';
-  if (!src) return '<span class="' + phCls + '"></span>';
-  return '<img class="' + cls + '" src="' + src + '" alt="' + name + '" onerror="this.style.display=\'none\'">';
+function logo(src,name,cls,ph){
+  if(!src)return '<span class="'+ph+'"></span>';
+  return '<img class="'+cls+'" src="'+src+'" alt="'+name+'" onerror="this.style.display=\'none\'">';
 }
+function fmtDate(s){var m=s&&s.match(/(\w+), (\d+) (\w+)/);return m?m[1]+' '+m[3]+' '+m[2]:(s||'');}
 
-// Date formatter: "Fri, 29 May 2026" -> "Fri May 29"
-function fmtDate(s) {
-  var m = s && s.match(/(\w+), (\d+) (\w+)/);
-  return m ? m[1] + ' ' + m[3] + ' ' + m[2] : (s || '');
-}
-
-// POOLS TAB
-(function() {
-  var POOL_COLORS = {A:'pool-a',B:'pool-b',C:'pool-c',D:'pool-d'};
-  var html = ['A','B','C','D'].map(function(p) {
-    var teams = STATE_DATA.pools[p] || [];
-    var rows = teams.map(function(t, i) {
-      var gp = t.w + t.l;
-      var pdStr = gp > 0 ? (t.pd > 0 ? '+' : '') + t.pd : '—';
-      var pfpaStr = gp > 0 ? t.pf + '/' + t.pa : '—';
-      return '<div class="pool-row' + (i===0?' leader':'') + '">' +
-        '<div class="pool-team"><span class="pool-rank">' + (i+1) + '</span>' +
-        logoImg(t.logo, t.team, 'pool-logo') +
-        '<span class="pool-team-name">' + t.team + '</span></div>' +
-        '<div class="pool-stat' + (gp>0?' active':'') + '">' + t.w + '-' + t.l + '</div>' +
-        '<div class="pool-stat' + (gp>0&&t.pd>0?' active':'') + '">' + pdStr + '</div>' +
-        '<div class="pool-stat' + (gp>0?' active':'') + '">' + pfpaStr + '</div>' +
-        '</div>';
+// POOLS
+(function(){
+  var html=['A','B','C','D'].map(function(p){
+    var rows=(STATE_DATA.pools[p]||[]).map(function(t,i){
+      var gp=t.w+t.l,pd=gp>0?(t.pd>0?'+':'')+t.pd:'—',pfpa=gp>0?t.pf+'/'+t.pa:'—';
+      return '<div class="pool-row'+(i===0?' leader':'')+'">'+
+        '<div class="pool-team"><span class="pool-rank">'+(i+1)+'</span>'+
+        logo(t.logo,t.team,'pool-logo','pool-logo-ph')+
+        '<span class="pool-team-name">'+t.team+'</span></div>'+
+        '<div class="pool-stat'+(gp>0?' on':'')+'">'+t.w+'-'+t.l+'</div>'+
+        '<div class="pool-stat'+(gp>0&&t.pd>0?' on':'')+'">'+pd+'</div>'+
+        '<div class="pool-stat'+(gp>0?' on':'')+'">'+pfpa+'</div></div>';
     }).join('');
-    return '<div class="pool-card ' + POOL_COLORS[p] + '">' +
-      '<div class="pool-card-header"><span class="pool-dot"></span>Pool ' + p + '</div>' +
-      '<div class="pool-col-hdr"><span>Team</span><span>W-L</span><span>PD</span><span>PF/PA</span></div>' +
-      rows + '</div>';
+    return '<div class="pool-card pool-'+p.toLowerCase()+'">'+
+      '<div class="pool-card-header">Pool '+p+'</div>'+
+      '<div class="pool-col-hdr"><span>Team</span><span>W-L</span><span>PD</span><span>PF/PA</span></div>'+
+      rows+'</div>';
   }).join('');
-  document.getElementById('poolGrid').innerHTML = html;
+  document.getElementById('poolGrid').innerHTML=html;
 })();
 
-// GAME CARD helper
-function gameCardHtml(g) {
-  var done = g.completed;
-  var t1w = done && g.score1 > g.score2;
-  var t2w = done && g.score2 > g.score1;
-  var scoreHtml = done
-    ? '<div class="game-score ' + (t1w?'w1':t2w?'w2':'') + '">' +
-      '<span class="s s1">' + g.score1 + '</span>' +
-      '<span class="sep">–</span>' +
-      '<span class="s s2">' + g.score2 + '</span></div>'
-    : '<div class="game-vs">' + g.time + '</div>';
-  var timeHtml = done
-    ? '<div class="game-time-label">' + fmtDate(g.date) + ' · ' + g.time + '</div>'
-    : '<div class="game-time-label">' + fmtDate(g.date) + '</div>';
-  return '<div class="game-card">' +
-    '<div class="game-team' + (t1w?' winner':t2w?' loser':'') + '">' +
-    logoImg(g.logo1, g.team1, 'game-logo') +
-    '<span class="game-name">' + g.team1 + '</span></div>' +
-    '<div class="game-score-box">' + scoreHtml + timeHtml + '</div>' +
-    '<div class="game-team right' + (t2w?' winner':t1w?' loser':'') + '">' +
-    logoImg(g.logo2, g.team2, 'game-logo') +
-    '<span class="game-name">' + g.team2 + '</span></div>' +
-    '</div>';
+// GAME CARD
+function gameCard(g){
+  var done=g.completed,t1w=done&&g.score1>g.score2,t2w=done&&g.score2>g.score1;
+  var pool=g.pool?'Pool '+g.pool+' · ':'';
+  var hdr=pool+fmtDate(g.date)+' · '+g.time;
+  return '<div class="game-card">'+
+    '<div class="gc-hdr"><span>'+hdr+'</span></div>'+
+    '<div class="gc-row'+(t1w?' won':t2w?' lost':'')+'">'+
+    '<div class="gc-team">'+logo(g.logo1,g.team1,'g-logo','g-logo-ph')+'<span class="gc-name">'+g.team1+'</span></div>'+
+    '<div class="gc-score'+(done?'':' tbd')+'">'+(done?g.score1:'&mdash;')+'</div></div>'+
+    '<div class="gc-row'+(t2w?' won':t1w?' lost':'')+'">'+
+    '<div class="gc-team">'+logo(g.logo2,g.team2,'g-logo','g-logo-ph')+'<span class="gc-name">'+g.team2+'</span></div>'+
+    '<div class="gc-score'+(done?'':' tbd')+'">'+(done?g.score2:'&mdash;')+'</div></div></div>';
 }
 
-// SCHEDULE TAB
-(function() {
-  var el = document.getElementById('scheduleContent');
-  var games = STATE_DATA.poolGames;
-  if (!games.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-title">Schedule not yet available</div><p>Check back soon.</p></div>';
-    return;
-  }
-  var DOT = {A:'pool-a-dot',B:'pool-b-dot',C:'pool-c-dot',D:'pool-d-dot'};
-  var html = ['A','B','C','D'].map(function(p) {
-    var pg = games.filter(function(g){return g.pool===p;});
-    if (!pg.length) return '';
-    return '<div class="section-hdr"><span class="section-dot ' + DOT[p] + '"></span>Pool ' + p + '</div>' +
-      pg.map(gameCardHtml).join('');
+// SCHEDULE
+(function(){
+  var el=document.getElementById('scheduleContent'),games=STATE_DATA.poolGames;
+  if(!games.length){el.innerHTML='<div class="empty"><h3>Schedule not yet available</h3></div>';return;}
+  var PIP={A:'pip-a',B:'pip-b',C:'pip-c',D:'pip-d'};
+  var html=['A','B','C','D'].map(function(p){
+    var pg=games.filter(function(g){return g.pool===p;});
+    return pg.length?'<div class="sec-hdr"><span class="pip '+PIP[p]+'"></span>Pool '+p+'</div>'+pg.map(gameCard).join(''):'';
   }).join('');
-  var bGames = STATE_DATA.bracketGames;
-  if (bGames.length) {
-    html += '<div class="section-hdr"><span class="section-dot bracket-dot"></span>Championship Bracket</div>' +
-      bGames.map(gameCardHtml).join('');
-  }
-  el.innerHTML = html;
+  if(STATE_DATA.bracketGames.length)
+    html+='<div class="sec-hdr"><span class="pip pip-brkt"></span>Bracket</div>'+STATE_DATA.bracketGames.map(gameCard).join('');
+  el.innerHTML=html;
 })();
 
-// SCORES TAB
-(function() {
-  var el = document.getElementById('scoresContent');
-  var all = STATE_DATA.poolGames.concat(STATE_DATA.bracketGames);
-  var done = all.filter(function(g){return g.completed;}).reverse();
-  if (!done.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-title">No scores yet</div><p>Check back Friday evening when games begin.</p></div>';
-    return;
-  }
-  el.innerHTML = done.map(function(g) {
-    var t1w = g.score1 > g.score2;
-    var poolLabel = g.pool ? 'Pool ' + g.pool + ' · ' : '';
-    return '<div class="game-card">' +
-      '<div class="game-team' + (t1w?' winner':' loser') + '">' +
-      logoImg(g.logo1, g.team1, 'game-logo') +
-      '<span class="game-name">' + g.team1 + '</span></div>' +
-      '<div class="game-score-box">' +
-      '<div class="game-score ' + (t1w?'w1':'w2') + '">' +
-      '<span class="s s1">' + g.score1 + '</span><span class="sep">–</span><span class="s s2">' + g.score2 + '</span></div>' +
-      '<div class="game-time-label">' + poolLabel + fmtDate(g.date) + ' · ' + g.time + '</div>' +
-      '</div>' +
-      '<div class="game-team right' + (!t1w?' winner':' loser') + '">' +
-      logoImg(g.logo2, g.team2, 'game-logo') +
-      '<span class="game-name">' + g.team2 + '</span></div>' +
-      '</div>';
-  }).join('');
+// SCORES
+(function(){
+  var el=document.getElementById('scoresContent');
+  var done=STATE_DATA.poolGames.concat(STATE_DATA.bracketGames).filter(function(g){return g.completed;}).reverse();
+  el.innerHTML=done.length?done.map(gameCard).join(''):'<div class="empty"><h3>No scores yet</h3><p>Check back Friday evening.</p></div>';
 })();
 
-// BRACKET TAB
-(function() {
-  var el = document.getElementById('bracketContent');
-  var games = STATE_DATA.bracketGames;
-  if (!games.length) {
-    el.innerHTML = '<p class="bracket-note">The championship bracket will be set after pool play concludes Saturday morning. Top 2 teams from each pool advance.</p>' +
-      '<div class="empty-state"><div class="empty-title">Bracket TBD</div></div>';
-    return;
+// BRACKET
+(function(){
+  var el=document.getElementById('bracketContent');
+
+  // Pool play is done when all pool games are completed
+  var poolDone = STATE_DATA.poolGames.length>0 && STATE_DATA.poolGames.every(function(g){return g.completed;});
+
+  // Layout (px): matchup height=76 (2×37px rows + 2px border)
+  var MH=76;
+  var QT=[0,100,200,300];
+  var QC=QT.map(function(t){return t+MH/2;});     // [38,138,238,338]
+  var ST=[(QC[0]+QC[1])/2-MH/2,(QC[2]+QC[3])/2-MH/2];  // [50,250]
+  var SC=ST.map(function(t){return t+MH/2;});     // [88,288]
+  var FT=(SC[0]+SC[1])/2-MH/2;                   // 150
+  var FC=FT+MH/2;                                 // 188
+
+  function hl(x1,x2,y){return '<div class="b-line b-h" style="left:'+x1+'px;width:'+(x2-x1)+'px;top:'+(y-1)+'px"></div>';}
+  function vl(x,y1,y2){return '<div class="b-line b-v" style="left:'+(x-1)+'px;top:'+y1+'px;height:'+(y2-y1)+'px"></div>';}
+  function connQFtoSF(p){var c1=QC[p*2],c2=QC[p*2+1],cs=SC[p];return hl(0,20,c1)+hl(0,20,c2)+vl(20,c1,c2)+hl(20,40,cs);}
+  function connSFtoF(){return hl(0,20,SC[0])+hl(0,20,SC[1])+vl(20,SC[0],SC[1])+hl(20,40,FC);}
+
+  function poolEntry(seed){return (STATE_DATA.pools[seed[0]]||[])[parseInt(seed[1])-1]||null;}
+  function bmLogo(src,name){
+    if(!src)return '<span class="bm-logo-ph"></span>';
+    return '<img class="bm-logo" src="'+src+'" alt="'+name+'" onerror="this.style.display=\'none\'">';
   }
-  var html = '<p class="bracket-note">Championship bracket &mdash; top 2 from each pool advance.</p>';
-  html += games.map(function(g) {
-    var done = g.completed;
-    var t1w = done && g.score1 > g.score2;
-    var t2w = done && g.score2 > g.score1;
-    var t1cls = !done?'tbd':t1w?'winner':'loser';
-    var t2cls = !done?'tbd':t2w?'winner':'loser';
-    var t1n = g.team1 || 'TBD'; var t2n = g.team2 || 'TBD';
-    return '<div class="bracket-card">' +
-      '<div class="bracket-row">' +
-      '<div class="bracket-team ' + t1cls + '">' + (g.logo1?'<img class="game-logo" src="'+g.logo1+'" alt="'+t1n+'" style="width:24px;height:24px">':'') + '<span>' + t1n + '</span></div>' +
-      '<div class="bracket-score' + (done?'':' tbd') + '">' + (done?g.score1:'–') + '</div></div>' +
-      '<div class="bracket-row">' +
-      '<div class="bracket-team ' + t2cls + '">' + (g.logo2?'<img class="game-logo" src="'+g.logo2+'" alt="'+t2n+'" style="width:24px;height:24px">':'') + '<span>' + t2n + '</span></div>' +
-      '<div class="bracket-score' + (done?'':' tbd') + '">' + (done?g.score2:'–') + '</div></div>' +
-      '<div class="bracket-time">' + fmtDate(g.date) + ' · ' + g.time + '</div>' +
+  function findBG(n1,n2){
+    return STATE_DATA.bracketGames.find(function(g){
+      return(g.team1===n1&&g.team2===n2)||(g.team1===n2&&g.team2===n1);
+    })||null;
+  }
+
+  function qfSlot(s1,s2,top){
+    var e1=poolEntry(s1),e2=poolEntry(s2);
+    var n1=e1?e1.team:null, n2=e2?e2.team:null;
+    var l1=e1?e1.logo:'', l2=e2?e2.logo:'';
+    var g=(n1&&n2)?findBG(n1,n2):null;
+    var done=g&&g.completed;
+    if(g){n1=g.team1;n2=g.team2;l1=g.logo1||l1;l2=g.logo2||l2;}
+    var t1w=done&&g.score1>g.score2, t2w=done&&g.score2>g.score1;
+    // Before pool play: show seed labels only (no team names or logos)
+    var d1=poolDone?(n1||s1):s1, d2=poolDone?(n2||s2):s2;
+    var showLogo=poolDone||done;
+    return '<div class="brkt-matchup" style="top:'+top+'px">'+
+      '<div class="bm-row'+(done?(t1w?' won':' lost'):'')+'">'+
+      (showLogo?bmLogo(l1,d1):'<span class="bm-logo-ph"></span>')+
+      '<span class="bm-seed">'+s1+'</span><span class="bm-name">'+d1+'</span>'+
+      '<span class="bm-score'+(done?'':' tbd')+'">'+(done?g.score1:'')+'</span></div>'+
+      '<div class="bm-row'+(done?(t2w?' won':' lost'):'')+'">'+
+      (showLogo?bmLogo(l2,d2):'<span class="bm-logo-ph"></span>')+
+      '<span class="bm-seed">'+s2+'</span><span class="bm-name">'+d2+'</span>'+
+      '<span class="bm-score'+(done?'':' tbd')+'">'+(done?g.score2:'')+'</span></div></div>';
+  }
+
+  function tbdSlot(top){
+    return '<div class="brkt-matchup" style="top:'+top+'px">'+
+      '<div class="bm-row tbd"><span class="bm-logo-ph"></span><span class="bm-seed"></span><span class="bm-name">TBD</span></div>'+
+      '<div class="bm-row tbd"><span class="bm-logo-ph"></span><span class="bm-seed"></span><span class="bm-name">TBD</span></div></div>';
+  }
+
+  function placementCard(label){
+    return '<div class="placement-card">'+
+      '<div class="placement-card-hdr">'+label+'</div>'+
+      '<div class="placement-team"><span class="bm-logo-ph"></span>TBD</div>'+
+      '<div class="placement-team"><span class="bm-logo-ph"></span>TBD</div>'+
       '</div>';
-  }).join('');
-  el.innerHTML = html;
+  }
+
+  function bracketSection(title, note, qfPairs, finalsLabel, placementLabels){
+    var qf=qfPairs.map(function(p,i){return qfSlot(p[0],p[1],QT[i]);}).join('');
+    var tree='<div class="brkt-tree">'+
+      '<div class="brkt-round">'+qf+'</div>'+
+      '<div class="brkt-conn">'+connQFtoSF(0)+connQFtoSF(1)+'</div>'+
+      '<div class="brkt-round">'+tbdSlot(ST[0])+tbdSlot(ST[1])+'</div>'+
+      '<div class="brkt-conn">'+connSFtoF()+'</div>'+
+      '<div class="brkt-round">'+tbdSlot(FT)+'</div>'+
+      '</div>';
+    var plac=placementLabels.map(placementCard).join('');
+    return '<div class="brkt-section">'+
+      '<div class="brkt-title">'+title+'</div>'+
+      '<div class="brkt-note">'+note+'</div>'+
+      '<div class="brkt-scroll">'+tree+'</div>'+
+      '<div class="brkt-placements">'+plac+'</div>'+
+      '</div>';
+  }
+
+  // Seedings confirmed from mnyu.ultimatecentral.com bracket page
+  var CHAMP=[['A1','B2'],['D1','C2'],['C1','D2'],['B1','A2']];
+  var CONSOL=[['A3','B4'],['D3','C4'],['C3','D4'],['B3','A4']];
+  var preNote = ' &middot; Team names appear after pool play concludes';
+
+  el.innerHTML=
+    bracketSection(
+      'Championship Bracket',
+      'Top 2 from each pool'+(poolDone?'':preNote),
+      CHAMP, 'Championship',
+      ['3rd Place','5th Place','7th Place']
+    )+
+    bracketSection(
+      'Consolation Bracket',
+      'Seeds 3&ndash;4 from each pool'+(poolDone?'':preNote),
+      CONSOL, '9th Place',
+      ['11th Place','13th Place','15th Place']
+    );
 })();
 </script>
 </body>
