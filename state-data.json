@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-29T23:04:33.444Z",
+  "updatedAt": "2026-05-30T02:00:58.352Z",
   "pools": {
     "A": [
       {
@@ -41,6 +41,15 @@
     ],
     "B": [
       {
+        "team": "Apple Valley",
+        "logo": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png",
+        "w": 1,
+        "l": 0,
+        "pf": 15,
+        "pa": 5,
+        "pd": 10
+      },
+      {
         "team": "Minneapolis Washburn",
         "logo": "https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg",
         "w": 0,
@@ -59,22 +68,13 @@
         "pd": 0
       },
       {
-        "team": "Apple Valley",
-        "logo": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png",
-        "w": 0,
-        "l": 0,
-        "pf": 0,
-        "pa": 0,
-        "pd": 0
-      },
-      {
         "team": "Eagan",
         "logo": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg",
         "w": 0,
-        "l": 0,
-        "pf": 0,
-        "pa": 0,
-        "pd": 0
+        "l": 1,
+        "pf": 5,
+        "pa": 15,
+        "pd": -10
       }
     ],
     "C": [
@@ -232,12 +232,12 @@
       "time": "6:30 PM",
       "team1": "Apple Valley",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png",
-      "score1": null,
+      "score1": 15,
       "team2": "Eagan",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg",
-      "score2": null,
+      "score2": 5,
       "pool": "B",
-      "completed": false
+      "completed": true
     },
     {
       "date": "Sat, 30 May 2026",
