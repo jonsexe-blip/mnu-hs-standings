@@ -116,8 +116,18 @@ console.log('Fetching pool play games...');
 const poolGames = await fetchAllPages(`${EVENT}/schedule/division/Open+D1/stage/${POOL_STAGE}`);
 console.log(`  ${poolGames.length} pool play games`);
 
+// stage/164253 uses a different HTML structure — use stage/all filtered to Sunday
 console.log('Fetching bracket games...');
-const bracketGames = await fetchAllPages(`${EVENT}/schedule/division/Open+D1/stage/${BRACKET_STAGE}`);
+const BRACKET_BASE = `${EVENT}/schedule/division/Open+D1/stage/all`;
+const upcomingBracket = (await fetchAllPages(`${BRACKET_BASE}/game_type/upcoming`))
+  .filter(g => g.date === 'Sun, 31 May 2026');
+const completedBracket = (await fetchAllPages(`${BRACKET_BASE}/game_type/completed`))
+  .filter(g => g.date === 'Sun, 31 May 2026');
+const seen = new Set();
+const bracketGames = [...upcomingBracket, ...completedBracket].filter(g => {
+  const k = `${g.team1}|${g.team2}|${g.time}`;
+  return seen.has(k) ? false : (seen.add(k), true);
+});
 console.log(`  ${bracketGames.length} bracket games`);
 
 // Compute pool standings from completed pool games

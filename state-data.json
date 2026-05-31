@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-31T03:14:04.449Z",
+  "updatedAt": "2026-05-31T03:20:50.385Z",
   "pools": {
     "A": [
       {
@@ -444,5 +444,102 @@
       "completed": true
     }
   ],
-  "bracketGames": []
+  "bracketGames": [
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "2:30 PM",
+      "team1": "Minnetonka",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/i7lZ2na9zJ/c-40-40/tonka.jpg",
+      "score1": null,
+      "team2": "Eagan",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg",
+      "score2": null,
+      "pool": "A",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "2:30 PM",
+      "team1": "Minneapolis Washburn",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg",
+      "score1": null,
+      "team2": "Mounds View",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Dj7ifj5JuD/c-40-40/blackgreenwhite-9.png",
+      "score2": null,
+      "pool": "B",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "2:30 PM",
+      "team1": "Apple Valley",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png",
+      "score1": null,
+      "team2": "White Bear Lake",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/FCufp1WUfX/c-40-40/boys-400x400.jpg",
+      "score2": null,
+      "pool": "B",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "2:30 PM",
+      "team1": "Minneapolis South",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/3HK81faKbr/c-40-40/south-squall-ultimate-7.jpg",
+      "score1": null,
+      "team2": "St Paul Central",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/UuMJHzLr5N/c-40-40/revolution-logo-transparent-2.png",
+      "score2": null,
+      "pool": "D",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "2:30 PM",
+      "team1": "Andover",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/4DGmfnQ8wd/c-40-40/andovermn-boys-2024-300x179.png",
+      "score1": null,
+      "team2": "Great River School",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NelRuwXz6E/c-40-40/stars-2016-backgroundandlogo.jpg",
+      "score2": null,
+      "pool": "C",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "2:30 PM",
+      "team1": "Hopkins",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/WVXwsJu4Ot/c-40-40/hurt-logo-2.png",
+      "score1": null,
+      "team2": "Woodbury",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/0Noa5hH65j/c-40-40-147-130-463-500/f5bee1a5feed44bfb94356b8518b84b9.jpg",
+      "score2": null,
+      "pool": "D",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "2:30 PM",
+      "team1": "Maple Grove",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/RYFAhJkJKD/c-40-40/image-6.jpg",
+      "score1": null,
+      "team2": "Open World Learning Community",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/gr9zYs83B0/c-40-40/owlmanateeimage.png",
+      "score2": null,
+      "pool": "C",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "2:30 PM",
+      "team1": "Edina",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NXid7TzikS/c-40-40/screen-shot-2019-11-27-at-12-21-51-pm.png",
+      "score1": null,
+      "team2": "St Louis Park",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/unN2UCB9kF/c-40-40/slp-logo-1-copy.jpg",
+      "score2": null,
+      "pool": "A",
+      "completed": false
+    }
+  ]
 }
