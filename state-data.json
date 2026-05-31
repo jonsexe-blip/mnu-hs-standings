@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-31T21:56:30.446Z",
+  "updatedAt": "2026-05-31T22:59:16.419Z",
   "pools": {
     "A": [
       {
@@ -460,6 +460,42 @@
     {
       "date": "Sun, 31 May 2026",
       "time": "4:30 PM",
+      "team1": "Andover",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/4DGmfnQ8wd/c-40-40/andovermn-boys-2024-300x179.png",
+      "score1": null,
+      "team2": "Minneapolis Washburn",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg",
+      "score2": null,
+      "pool": "C",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Maple Grove",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/RYFAhJkJKD/c-40-40/image-6.jpg",
+      "score1": null,
+      "team2": "Apple Valley",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png",
+      "score2": null,
+      "pool": "C",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Great River School",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NelRuwXz6E/c-40-40/stars-2016-backgroundandlogo.jpg",
+      "score1": null,
+      "team2": "Mounds View",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Dj7ifj5JuD/c-40-40/blackgreenwhite-9.png",
+      "score2": null,
+      "pool": "D",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
       "team1": "Eagan",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg",
       "score1": null,
@@ -467,6 +503,18 @@
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/WVXwsJu4Ot/c-40-40/hurt-logo-2.png",
       "score2": null,
       "pool": "B",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Open World Learning Community",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/gr9zYs83B0/c-40-40/owlmanateeimage.png",
+      "score1": null,
+      "team2": "White Bear Lake",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/FCufp1WUfX/c-40-40/boys-400x400.jpg",
+      "score2": null,
+      "pool": "D",
       "completed": false
     },
     {
@@ -486,12 +534,12 @@
       "time": "2:30 PM",
       "team1": "Minneapolis Washburn",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg",
-      "score1": null,
+      "score1": 15,
       "team2": "Mounds View",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Dj7ifj5JuD/c-40-40/blackgreenwhite-9.png",
-      "score2": null,
+      "score2": 12,
       "pool": "B",
-      "completed": false
+      "completed": true
     },
     {
       "date": "Sun, 31 May 2026",
@@ -546,12 +594,12 @@
       "time": "2:30 PM",
       "team1": "Maple Grove",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/RYFAhJkJKD/c-40-40/image-6.jpg",
-      "score1": null,
+      "score1": 12,
       "team2": "Open World Learning Community",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/gr9zYs83B0/c-40-40/owlmanateeimage.png",
-      "score2": null,
+      "score2": 11,
       "pool": "C",
-      "completed": false
+      "completed": true
     },
     {
       "date": "Sun, 31 May 2026",
