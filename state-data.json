@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-31T19:10:28.331Z",
+  "updatedAt": "2026-05-31T20:54:54.244Z",
   "pools": {
     "A": [
       {
@@ -498,24 +498,24 @@
       "time": "2:30 PM",
       "team1": "Andover",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/4DGmfnQ8wd/c-40-40/andovermn-boys-2024-300x179.png",
-      "score1": null,
+      "score1": 15,
       "team2": "Great River School",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NelRuwXz6E/c-40-40/stars-2016-backgroundandlogo.jpg",
-      "score2": null,
+      "score2": 3,
       "pool": "C",
-      "completed": false
+      "completed": true
     },
     {
       "date": "Sun, 31 May 2026",
       "time": "2:30 PM",
       "team1": "Hopkins",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/WVXwsJu4Ot/c-40-40/hurt-logo-2.png",
-      "score1": null,
+      "score1": 5,
       "team2": "Woodbury",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/0Noa5hH65j/c-40-40-147-130-463-500/f5bee1a5feed44bfb94356b8518b84b9.jpg",
-      "score2": null,
+      "score2": 15,
       "pool": "D",
-      "completed": false
+      "completed": true
     },
     {
       "date": "Sun, 31 May 2026",
