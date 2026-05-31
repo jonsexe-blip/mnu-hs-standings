@@ -92,11 +92,9 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .b-line{position:absolute;background:var(--border)}
 .b-h{height:2px}
 .b-v{width:2px}
-.brkt-placements{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-.placement-card{background:var(--surf);border:1px solid var(--border);border-radius:6px;overflow:hidden;flex:0 0 auto;width:220px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
-.placement-card-hdr{background:var(--surf2);padding:5px 10px;font-size:11px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.05em}
-.placement-team{display:flex;align-items:center;gap:6px;padding:8px 10px;font-size:12px;font-style:italic;color:var(--muted)}
-.placement-team:not(:last-child){border-bottom:1px solid var(--border)}
+.brkt-placements{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;align-items:flex-start}
+.place-wrap{flex:0 0 auto}
+.place-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;padding:0 2px}
 </style>
 </head>
 <body>
@@ -214,25 +212,15 @@ function gameCard(g){
 // BRACKET
 (function(){
   var el=document.getElementById('bracketContent');
+  var poolDone=STATE_DATA.poolGames.length>0&&STATE_DATA.poolGames.every(function(g){return g.completed;});
 
-  // Pool play is done when all pool games are completed
-  var poolDone = STATE_DATA.poolGames.length>0 && STATE_DATA.poolGames.every(function(g){return g.completed;});
-
-  // Layout (px): matchup height=76 (2×37px rows + 2px border)
   var MH=76;
-  var QT=[0,100,200,300];
-  var QC=QT.map(function(t){return t+MH/2;});     // [38,138,238,338]
-  var ST=[(QC[0]+QC[1])/2-MH/2,(QC[2]+QC[3])/2-MH/2];  // [50,250]
-  var SC=ST.map(function(t){return t+MH/2;});     // [88,288]
-  var FT=(SC[0]+SC[1])/2-MH/2;                   // 150
-  var FC=FT+MH/2;                                 // 188
 
   function hl(x1,x2,y){return '<div class="b-line b-h" style="left:'+x1+'px;width:'+(x2-x1)+'px;top:'+(y-1)+'px"></div>';}
   function vl(x,y1,y2){return '<div class="b-line b-v" style="left:'+(x-1)+'px;top:'+y1+'px;height:'+(y2-y1)+'px"></div>';}
-  function connQFtoSF(p){var c1=QC[p*2],c2=QC[p*2+1],cs=SC[p];return hl(0,20,c1)+hl(0,20,c2)+vl(20,c1,c2)+hl(20,40,cs);}
-  function connSFtoF(){return hl(0,20,SC[0])+hl(0,20,SC[1])+vl(20,SC[0],SC[1])+hl(20,40,FC);}
+  function conn2to1(c1,c2,fc){return hl(0,20,c1)+hl(0,20,c2)+vl(20,c1,c2)+hl(20,40,fc);}
 
-  function poolEntry(seed){return (STATE_DATA.pools[seed[0]]||[])[parseInt(seed[1])-1]||null;}
+  function poolEntry(seed){return(STATE_DATA.pools[seed[0]]||[])[parseInt(seed[1])-1]||null;}
   function bmLogo(src,name){
     if(!src)return '<span class="bm-logo-ph"></span>';
     return '<img class="bm-logo" src="'+src+'" alt="'+name+'" onerror="this.style.display=\'none\'">';
@@ -243,78 +231,131 @@ function gameCard(g){
     })||null;
   }
 
-  function qfSlot(s1,s2,top){
-    var e1=poolEntry(s1),e2=poolEntry(s2);
-    var n1=e1?e1.team:null, n2=e2?e2.team:null;
-    var l1=e1?e1.logo:'', l2=e2?e2.logo:'';
+  // Team descriptor: name=display name (null→TBD), logo, label=seed like 'A1'
+  function T(n,l,lb){return{name:n||null,logo:l||'',label:lb||''};}
+
+  function slot(t1,t2,top){
+    var n1=t1.name,l1=t1.logo,lb1=t1.label;
+    var n2=t2.name,l2=t2.logo,lb2=t2.label;
     var g=(n1&&n2)?findBG(n1,n2):null;
     var done=g&&g.completed;
-    if(g){n1=g.team1;n2=g.team2;l1=g.logo1||l1;l2=g.logo2||l2;}
-    var t1w=done&&g.score1>g.score2, t2w=done&&g.score2>g.score1;
-    // Before pool play: show seed labels only (no team names or logos)
-    var d1=poolDone?(n1||s1):s1, d2=poolDone?(n2||s2):s2;
-    var showLogo=poolDone||done;
+    if(g&&g.team1===n2){var x;x=n1;n1=n2;n2=x;x=l1;l1=l2;l2=x;x=lb1;lb1=lb2;lb2=x;}
+    if(g){l1=g.logo1||l1;l2=g.logo2||l2;}
+    var w1=done&&g.score1>g.score2,w2=done&&g.score2>g.score1;
+    function row(nm,logo,lb,won,lost,sc){
+      return '<div class="bm-row'+(won?' won':lost?' lost':(nm?'':' tbd'))+'">'+
+        (nm?bmLogo(logo,nm):'<span class="bm-logo-ph"></span>')+
+        (lb?'<span class="bm-seed">'+lb+'</span>':'')+
+        '<span class="bm-name">'+(nm||lb||'TBD')+'</span>'+
+        '<span class="bm-score'+(done?'':' tbd')+'">'+(done?sc:'')+'</span></div>';
+    }
     return '<div class="brkt-matchup" style="top:'+top+'px">'+
-      '<div class="bm-row'+(done?(t1w?' won':' lost'):'')+'">'+
-      (showLogo?bmLogo(l1,d1):'<span class="bm-logo-ph"></span>')+
-      '<span class="bm-seed">'+s1+'</span><span class="bm-name">'+d1+'</span>'+
-      '<span class="bm-score'+(done?'':' tbd')+'">'+(done?g.score1:'')+'</span></div>'+
-      '<div class="bm-row'+(done?(t2w?' won':' lost'):'')+'">'+
-      (showLogo?bmLogo(l2,d2):'<span class="bm-logo-ph"></span>')+
-      '<span class="bm-seed">'+s2+'</span><span class="bm-name">'+d2+'</span>'+
-      '<span class="bm-score'+(done?'':' tbd')+'">'+(done?g.score2:'')+'</span></div></div>';
-  }
-
-  function tbdSlot(top){
-    return '<div class="brkt-matchup" style="top:'+top+'px">'+
-      '<div class="bm-row tbd"><span class="bm-logo-ph"></span><span class="bm-seed"></span><span class="bm-name">TBD</span></div>'+
-      '<div class="bm-row tbd"><span class="bm-logo-ph"></span><span class="bm-seed"></span><span class="bm-name">TBD</span></div></div>';
-  }
-
-  function placementCard(label){
-    return '<div class="placement-card">'+
-      '<div class="placement-card-hdr">'+label+'</div>'+
-      '<div class="placement-team"><span class="bm-logo-ph"></span>TBD</div>'+
-      '<div class="placement-team"><span class="bm-logo-ph"></span>TBD</div>'+
+      row(n1,l1,lb1,w1,done&&!w1,done?g.score1:'')+
+      row(n2,l2,lb2,w2,done&&!w2,done?g.score2:'')+
       '</div>';
   }
 
-  function bracketSection(title, note, qfPairs, finalsLabel, placementLabels){
-    var qf=qfPairs.map(function(p,i){return qfSlot(p[0],p[1],QT[i]);}).join('');
-    var tree='<div class="brkt-tree">'+
-      '<div class="brkt-round">'+qf+'</div>'+
-      '<div class="brkt-conn">'+connQFtoSF(0)+connQFtoSF(1)+'</div>'+
-      '<div class="brkt-round">'+tbdSlot(ST[0])+tbdSlot(ST[1])+'</div>'+
-      '<div class="brkt-conn">'+connSFtoF()+'</div>'+
-      '<div class="brkt-round">'+tbdSlot(FT)+'</div>'+
+  function qfSlot(s1,s2,top){
+    var e1=poolEntry(s1),e2=poolEntry(s2);
+    var t1=poolDone?T(e1?e1.team:null,e1?e1.logo:'',s1):T(null,'',s1);
+    var t2=poolDone?T(e2?e2.team:null,e2?e2.logo:'',s2):T(null,'',s2);
+    return slot(t1,t2,top);
+  }
+
+  function qfResult(s1,s2){
+    if(!poolDone)return null;
+    var e1=poolEntry(s1),e2=poolEntry(s2);
+    if(!e1||!e2)return null;
+    var g=findBG(e1.team,e2.team);
+    if(!g||!g.completed)return null;
+    var w=g.score1>g.score2;
+    return{
+      winner:T(w?g.team1:g.team2,w?g.logo1:g.logo2,''),
+      loser:T(w?g.team2:g.team1,w?g.logo2:g.logo1,'')
+    };
+  }
+
+  function gameResult(t1,t2){
+    if(!t1||!t1.name||!t2||!t2.name)return null;
+    var g=findBG(t1.name,t2.name);
+    if(!g||!g.completed)return null;
+    var w=g.score1>g.score2;
+    return{
+      winner:T(w?g.team1:g.team2,w?(g.logo1||t1.logo):(g.logo2||t2.logo),''),
+      loser:T(w?g.team2:g.team1,w?(g.logo2||t2.logo):(g.logo1||t1.logo),'')
+    };
+  }
+
+  function bracketBlock(title,note,qfPairs){
+    var QT=[0,100,200,300],QC=[38,138,238,338];
+    var ST=[50,250],SC=[88,288];
+    var FT=150,FC=188;
+
+    var qf=qfPairs.map(function(p){return qfResult(p[0],p[1]);});
+
+    // SF teams = QF winners (adjacent pairs)
+    var sf1=[qf[0]?qf[0].winner:T(null,'',''),qf[1]?qf[1].winner:T(null,'','')];
+    var sf2=[qf[2]?qf[2].winner:T(null,'',''),qf[3]?qf[3].winner:T(null,'','')];
+    var sfr1=gameResult(sf1[0],sf1[1]),sfr2=gameResult(sf2[0],sf2[1]);
+
+    // Final teams = SF winners
+    var fin=[sfr1?sfr1.winner:T(null,'',''),sfr2?sfr2.winner:T(null,'','')];
+
+    // Main QF→SF→Final tree
+    var qfH=qfPairs.map(function(p,i){return qfSlot(p[0],p[1],QT[i]);}).join('');
+    var sfH=slot(sf1[0],sf1[1],ST[0])+slot(sf2[0],sf2[1],ST[1]);
+    var finH=slot(fin[0],fin[1],FT);
+    var mainTree='<div class="brkt-tree" style="height:380px">'+
+      '<div class="brkt-round">'+qfH+'</div>'+
+      '<div class="brkt-conn">'+conn2to1(QC[0],QC[1],SC[0])+conn2to1(QC[2],QC[3],SC[1])+'</div>'+
+      '<div class="brkt-round">'+sfH+'</div>'+
+      '<div class="brkt-conn">'+conn2to1(SC[0],SC[1],FC)+'</div>'+
+      '<div class="brkt-round">'+finH+'</div>'+
       '</div>';
-    var plac=placementLabels.map(placementCard).join('');
+
+    // 3rd Place: losers of the two SFs
+    var t3a=sfr1?sfr1.loser:T(null,'',''),t3b=sfr2?sfr2.loser:T(null,'','');
+    var third='<div class="place-wrap">'+
+      '<div class="place-label">3rd Place</div>'+
+      '<div class="brkt-scroll"><div class="brkt-round" style="height:'+MH+'px">'+slot(t3a,t3b,0)+'</div></div></div>';
+
+    // 5th Place: QF losers play 2-round mini bracket (SF1, SF2 → Final)
+    var f5=[
+      qf[0]?qf[0].loser:T(null,'',''),qf[1]?qf[1].loser:T(null,'',''),
+      qf[2]?qf[2].loser:T(null,'',''),qf[3]?qf[3].loser:T(null,'','')
+    ];
+    var f5sf1r=gameResult(f5[0],f5[1]),f5sf2r=gameResult(f5[2],f5[3]);
+    var f5fin=[f5sf1r?f5sf1r.winner:T(null,'',''),f5sf2r?f5sf2r.winner:T(null,'','')];
+    var fifth='<div class="place-wrap">'+
+      '<div class="place-label">5th Place</div>'+
+      '<div class="brkt-scroll"><div class="brkt-tree" style="height:180px">'+
+        '<div class="brkt-round">'+slot(f5[0],f5[1],0)+slot(f5[2],f5[3],100)+'</div>'+
+        '<div class="brkt-conn" style="height:180px">'+conn2to1(38,138,88)+'</div>'+
+        '<div class="brkt-round">'+slot(f5fin[0],f5fin[1],50)+'</div>'+
+      '</div></div></div>';
+
+    // 7th Place: losers of the two 5th-place SFs
+    var t7a=f5sf1r?f5sf1r.loser:T(null,'',''),t7b=f5sf2r?f5sf2r.loser:T(null,'','');
+    var seventh='<div class="place-wrap">'+
+      '<div class="place-label">7th Place</div>'+
+      '<div class="brkt-scroll"><div class="brkt-round" style="height:'+MH+'px">'+slot(t7a,t7b,0)+'</div></div></div>';
+
     return '<div class="brkt-section">'+
       '<div class="brkt-title">'+title+'</div>'+
       '<div class="brkt-note">'+note+'</div>'+
-      '<div class="brkt-scroll">'+tree+'</div>'+
-      '<div class="brkt-placements">'+plac+'</div>'+
+      '<div class="brkt-scroll">'+mainTree+'</div>'+
+      '<div class="brkt-placements">'+third+fifth+seventh+'</div>'+
       '</div>';
   }
 
+  var preNote=' &middot; Team names appear after pool play concludes';
   // Seedings confirmed from mnyu.ultimatecentral.com bracket page
   var CHAMP=[['A1','B2'],['D1','C2'],['C1','D2'],['B1','A2']];
   var CONSOL=[['A3','B4'],['D3','C4'],['C3','D4'],['B3','A4']];
-  var preNote = ' &middot; Team names appear after pool play concludes';
 
   el.innerHTML=
-    bracketSection(
-      'Championship Bracket',
-      'Top 2 from each pool'+(poolDone?'':preNote),
-      CHAMP, 'Championship',
-      ['3rd Place','5th Place','7th Place']
-    )+
-    bracketSection(
-      'Consolation Bracket',
-      'Seeds 3&ndash;4 from each pool'+(poolDone?'':preNote),
-      CONSOL, '9th Place',
-      ['11th Place','13th Place','15th Place']
-    );
+    bracketBlock('Championship Bracket','Top 2 from each pool'+(poolDone?'':preNote),CHAMP)+
+    bracketBlock('Consolation Bracket','Seeds 3&ndash;4 from each pool'+(poolDone?'':preNote),CONSOL);
 })();
 </script>
 </body>
