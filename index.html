@@ -286,7 +286,7 @@ function gameCard(g){
     };
   }
 
-  function bracketBlock(title,note,qfPairs){
+  function bracketBlock(title,note,qfPairs,placeLabels){
     var QT=[0,100,200,300],QC=[38,138,238,338];
     var ST=[50,250],SC=[88,288];
     var FT=150,FC=188;
@@ -316,7 +316,7 @@ function gameCard(g){
     // 3rd Place: losers of the two SFs
     var t3a=sfr1?sfr1.loser:T(null,'',''),t3b=sfr2?sfr2.loser:T(null,'','');
     var third='<div class="place-wrap">'+
-      '<div class="place-label">3rd Place</div>'+
+      '<div class="place-label">'+placeLabels[0]+'</div>'+
       '<div class="brkt-scroll"><div class="brkt-round" style="height:'+MH+'px">'+slot(t3a,t3b,0)+'</div></div></div>';
 
     // 5th Place: QF losers play 2-round mini bracket (SF1, SF2 → Final)
@@ -327,7 +327,7 @@ function gameCard(g){
     var f5sf1r=gameResult(f5[0],f5[1]),f5sf2r=gameResult(f5[2],f5[3]);
     var f5fin=[f5sf1r?f5sf1r.winner:T(null,'',''),f5sf2r?f5sf2r.winner:T(null,'','')];
     var fifth='<div class="place-wrap">'+
-      '<div class="place-label">5th Place</div>'+
+      '<div class="place-label">'+placeLabels[1]+'</div>'+
       '<div class="brkt-scroll"><div class="brkt-tree" style="height:180px">'+
         '<div class="brkt-round">'+slot(f5[0],f5[1],0)+slot(f5[2],f5[3],100)+'</div>'+
         '<div class="brkt-conn" style="height:180px">'+conn2to1(38,138,88)+'</div>'+
@@ -337,7 +337,7 @@ function gameCard(g){
     // 7th Place: losers of the two 5th-place SFs
     var t7a=f5sf1r?f5sf1r.loser:T(null,'',''),t7b=f5sf2r?f5sf2r.loser:T(null,'','');
     var seventh='<div class="place-wrap">'+
-      '<div class="place-label">7th Place</div>'+
+      '<div class="place-label">'+placeLabels[2]+'</div>'+
       '<div class="brkt-scroll"><div class="brkt-round" style="height:'+MH+'px">'+slot(t7a,t7b,0)+'</div></div></div>';
 
     return '<div class="brkt-section">'+
@@ -354,8 +354,8 @@ function gameCard(g){
   var CONSOL=[['A3','B4'],['D3','C4'],['C3','D4'],['B3','A4']];
 
   el.innerHTML=
-    bracketBlock('Championship Bracket','Top 2 from each pool'+(poolDone?'':preNote),CHAMP)+
-    bracketBlock('Consolation Bracket','Seeds 3&ndash;4 from each pool'+(poolDone?'':preNote),CONSOL);
+    bracketBlock('Championship Bracket','Top 2 from each pool'+(poolDone?'':preNote),CHAMP,['3rd Place','5th Place','7th Place'])+
+    bracketBlock('Consolation Bracket','Seeds 3&ndash;4 from each pool'+(poolDone?'':preNote),CONSOL,['11th Place','13th Place','15th Place']);
 })();
 </script>
 </body>
