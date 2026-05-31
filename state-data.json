@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-31T20:54:54.244Z",
+  "updatedAt": "2026-05-31T21:56:30.446Z",
   "pools": {
     "A": [
       {
@@ -447,15 +447,39 @@
   "bracketGames": [
     {
       "date": "Sun, 31 May 2026",
-      "time": "2:30 PM",
+      "time": "4:30 PM",
       "team1": "Minnetonka",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/i7lZ2na9zJ/c-40-40/tonka.jpg",
       "score1": null,
-      "team2": "Eagan",
-      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg",
+      "team2": "Woodbury",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/0Noa5hH65j/c-40-40-147-130-463-500/f5bee1a5feed44bfb94356b8518b84b9.jpg",
       "score2": null,
       "pool": "A",
       "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Eagan",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg",
+      "score1": null,
+      "team2": "Hopkins",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/WVXwsJu4Ot/c-40-40/hurt-logo-2.png",
+      "score2": null,
+      "pool": "B",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "2:30 PM",
+      "team1": "Minnetonka",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/i7lZ2na9zJ/c-40-40/tonka.jpg",
+      "score1": 15,
+      "team2": "Eagan",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg",
+      "score2": 9,
+      "pool": "A",
+      "completed": true
     },
     {
       "date": "Sun, 31 May 2026",
@@ -474,12 +498,12 @@
       "time": "2:30 PM",
       "team1": "Apple Valley",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png",
-      "score1": null,
+      "score1": 15,
       "team2": "White Bear Lake",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/FCufp1WUfX/c-40-40/boys-400x400.jpg",
-      "score2": null,
+      "score2": 11,
       "pool": "B",
-      "completed": false
+      "completed": true
     },
     {
       "date": "Sun, 31 May 2026",
@@ -534,12 +558,12 @@
       "time": "2:30 PM",
       "team1": "Edina",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NXid7TzikS/c-40-40/screen-shot-2019-11-27-at-12-21-51-pm.png",
-      "score1": null,
+      "score1": 15,
       "team2": "St Louis Park",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/unN2UCB9kF/c-40-40/slp-logo-1-copy.jpg",
-      "score2": null,
+      "score2": 12,
       "pool": "A",
-      "completed": false
+      "completed": true
     }
   ]
 }
