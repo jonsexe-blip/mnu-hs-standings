@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-31T22:59:16.419Z",
+  "updatedAt": "2026-06-01T00:11:30.316Z",
   "pools": {
     "A": [
       {
@@ -447,33 +447,9 @@
   "bracketGames": [
     {
       "date": "Sun, 31 May 2026",
-      "time": "4:30 PM",
-      "team1": "Minnetonka",
-      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/i7lZ2na9zJ/c-40-40/tonka.jpg",
-      "score1": null,
-      "team2": "Woodbury",
-      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/0Noa5hH65j/c-40-40-147-130-463-500/f5bee1a5feed44bfb94356b8518b84b9.jpg",
-      "score2": null,
-      "pool": "A",
-      "completed": false
-    },
-    {
-      "date": "Sun, 31 May 2026",
-      "time": "4:30 PM",
-      "team1": "Andover",
-      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/4DGmfnQ8wd/c-40-40/andovermn-boys-2024-300x179.png",
-      "score1": null,
-      "team2": "Minneapolis Washburn",
-      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg",
-      "score2": null,
-      "pool": "C",
-      "completed": false
-    },
-    {
-      "date": "Sun, 31 May 2026",
-      "time": "4:30 PM",
-      "team1": "Maple Grove",
-      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/RYFAhJkJKD/c-40-40/image-6.jpg",
+      "time": "6:30 PM",
+      "team1": "Woodbury",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/0Noa5hH65j/c-40-40-147-130-463-500/f5bee1a5feed44bfb94356b8518b84b9.jpg",
       "score1": null,
       "team2": "Apple Valley",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png",
@@ -483,38 +459,26 @@
     },
     {
       "date": "Sun, 31 May 2026",
-      "time": "4:30 PM",
-      "team1": "Great River School",
-      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NelRuwXz6E/c-40-40/stars-2016-backgroundandlogo.jpg",
+      "time": "6:30 PM",
+      "team1": "St Paul Central",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/UuMJHzLr5N/c-40-40/revolution-logo-transparent-2.png",
       "score1": null,
-      "team2": "Mounds View",
-      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Dj7ifj5JuD/c-40-40/blackgreenwhite-9.png",
+      "team2": "Minneapolis Washburn",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg",
       "score2": null,
-      "pool": "D",
+      "pool": "C",
       "completed": false
     },
     {
       "date": "Sun, 31 May 2026",
-      "time": "4:30 PM",
-      "team1": "Eagan",
-      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg",
+      "time": "6:30 PM",
+      "team1": "Minnetonka",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/i7lZ2na9zJ/c-40-40/tonka.jpg",
       "score1": null,
-      "team2": "Hopkins",
-      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/WVXwsJu4Ot/c-40-40/hurt-logo-2.png",
+      "team2": "Maple Grove",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/RYFAhJkJKD/c-40-40/image-6.jpg",
       "score2": null,
-      "pool": "B",
-      "completed": false
-    },
-    {
-      "date": "Sun, 31 May 2026",
-      "time": "4:30 PM",
-      "team1": "Open World Learning Community",
-      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/gr9zYs83B0/c-40-40/owlmanateeimage.png",
-      "score1": null,
-      "team2": "White Bear Lake",
-      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/FCufp1WUfX/c-40-40/boys-400x400.jpg",
-      "score2": null,
-      "pool": "D",
+      "pool": "A",
       "completed": false
     },
     {
@@ -558,12 +522,12 @@
       "time": "2:30 PM",
       "team1": "Minneapolis South",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/3HK81faKbr/c-40-40/south-squall-ultimate-7.jpg",
-      "score1": null,
+      "score1": 9,
       "team2": "St Paul Central",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/UuMJHzLr5N/c-40-40/revolution-logo-transparent-2.png",
-      "score2": null,
+      "score2": 10,
       "pool": "D",
-      "completed": false
+      "completed": true
     },
     {
       "date": "Sun, 31 May 2026",
@@ -610,6 +574,102 @@
       "team2": "St Louis Park",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/unN2UCB9kF/c-40-40/slp-logo-1-copy.jpg",
       "score2": 12,
+      "pool": "A",
+      "completed": true
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Minnetonka",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/i7lZ2na9zJ/c-40-40/tonka.jpg",
+      "score1": 5,
+      "team2": "Woodbury",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/0Noa5hH65j/c-40-40-147-130-463-500/f5bee1a5feed44bfb94356b8518b84b9.jpg",
+      "score2": 15,
+      "pool": "A",
+      "completed": true
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Andover",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/4DGmfnQ8wd/c-40-40/andovermn-boys-2024-300x179.png",
+      "score1": 14,
+      "team2": "Minneapolis Washburn",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg",
+      "score2": 12,
+      "pool": "C",
+      "completed": true
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Maple Grove",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/RYFAhJkJKD/c-40-40/image-6.jpg",
+      "score1": 13,
+      "team2": "Apple Valley",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Ycp4xlPRzw/c-40-40/avujacketlogo.png",
+      "score2": 14,
+      "pool": "C",
+      "completed": true
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "St Louis Park",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/unN2UCB9kF/c-40-40/slp-logo-1-copy.jpg",
+      "score1": 11,
+      "team2": "Minneapolis South",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/3HK81faKbr/c-40-40/south-squall-ultimate-7.jpg",
+      "score2": 15,
+      "pool": "B",
+      "completed": true
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Great River School",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NelRuwXz6E/c-40-40/stars-2016-backgroundandlogo.jpg",
+      "score1": null,
+      "team2": "Mounds View",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/Dj7ifj5JuD/c-40-40/blackgreenwhite-9.png",
+      "score2": null,
+      "pool": "D",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Eagan",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NPjqP3Y7FR/c-40-40/boys-varsity.jpg",
+      "score1": 15,
+      "team2": "Hopkins",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/WVXwsJu4Ot/c-40-40/hurt-logo-2.png",
+      "score2": 0,
+      "pool": "B",
+      "completed": true
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Open World Learning Community",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/gr9zYs83B0/c-40-40/owlmanateeimage.png",
+      "score1": null,
+      "team2": "White Bear Lake",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/FCufp1WUfX/c-40-40/boys-400x400.jpg",
+      "score2": null,
+      "pool": "D",
+      "completed": false
+    },
+    {
+      "date": "Sun, 31 May 2026",
+      "time": "4:30 PM",
+      "team1": "Edina",
+      "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NXid7TzikS/c-40-40/screen-shot-2019-11-27-at-12-21-51-pm.png",
+      "score1": 15,
+      "team2": "St Paul Central",
+      "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/UuMJHzLr5N/c-40-40/revolution-logo-transparent-2.png",
+      "score2": 5,
       "pool": "A",
       "completed": true
     }
