@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-01T04:19:13.204Z",
+  "updatedAt": "2026-06-05T22:58:50.752Z",
   "pools": {
     "A": [
       {
@@ -654,12 +654,12 @@
       "time": "6:30 PM",
       "team1": "St Paul Central",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/UuMJHzLr5N/c-40-40/revolution-logo-transparent-2.png",
-      "score1": null,
+      "score1": 7,
       "team2": "Minneapolis Washburn",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/ee4ijRaJn4/c-40-40/washburn-ultimate-logo.jpg",
-      "score2": null,
+      "score2": 14,
       "pool": "C",
-      "completed": false
+      "completed": true
     },
     {
       "date": "Sun, 31 May 2026",
@@ -678,12 +678,12 @@
       "time": "6:30 PM",
       "team1": "Minneapolis South",
       "logo1": "https://d36m266ykvepgv.cloudfront.net/uploads/media/3HK81faKbr/c-40-40/south-squall-ultimate-7.jpg",
-      "score1": null,
+      "score1": 13,
       "team2": "Great River School",
       "logo2": "https://d36m266ykvepgv.cloudfront.net/uploads/media/NelRuwXz6E/c-40-40/stars-2016-backgroundandlogo.jpg",
-      "score2": null,
+      "score2": 10,
       "pool": "D",
-      "completed": false
+      "completed": true
     },
     {
       "date": "Sun, 31 May 2026",
